@@ -19,5 +19,12 @@ updated: 2026-11-21
 - 用在偵測上就是[[vision-language-detector|圖文偵測器]]（GLIP、Grounding DINO）。（TTAOD-F, p.3）
 - 調整方式見 [[prompt-tuning]]。
 
+## 和[[vision-foundation-model|視覺基礎模型]]、[[vision-language-detector|圖文偵測器]]有什麼不同？
+| | 視覺基礎模型（DINOv2、OV-SAM） | 圖文模型（CLIP） | 圖文偵測器（Grounding DINO、YOLO-World） |
+|---|---|---|---|
+| 懂文字嗎 | 否（OV-SAM 為開放詞彙分割，但本 wiki 只用其不分類別遮罩） | 是 | 是 |
+| 輸出 | 特徵或遮罩（DSOD, p.3；FALCON, p.3） | 整張圖和文字的相似度（CGA, p.3） | 框＋類別（TTAOD-F, p.3） |
+| 本 wiki 用途 | 當顧問或畫重點 | 分類的參考答案 | 直接當偵測器 |
+
 ## 相關
 [[cga-2026]] · [[class-confusion]]

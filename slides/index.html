@@ -94,6 +94,21 @@ ul.pts li::before{content:"";position:absolute;left:4px;top:11px;width:18px;heig
 ul.pts li{font-size:29px}
 .card p{font-size:23px}
 .card h3{font-size:28px}
+.detail{padding:40px 64px 56px}
+.detail h2{font-size:34px;margin-bottom:10px}
+.detail .kicker{margin-bottom:8px}
+.diagwrap{display:flex;justify-content:center}
+svg.diagram{max-width:100%;height:auto;font-family:var(--font)}
+svg .nt{font-size:20px;font-weight:800;fill:#2B2D42}
+svg .ns{font-size:15px;fill:#5B5E72}
+svg .el{font-size:15px;font-weight:700;fill:#5B5E72;paint-order:stroke;stroke:#FBF5EC;stroke-width:6px}
+svg .ph{font-size:15px;font-weight:800;fill:#9061E6}
+.dqrow{display:flex;gap:14px;margin-top:18px;align-items:stretch}
+.dqlabel{writing-mode:vertical-rl;font-size:16px;font-weight:900;color:#fff;background:var(--ink);border-radius:10px;padding:10px 6px;letter-spacing:.2em}
+.dq{flex:1;background:#fff;border:3px solid;border-radius:16px;padding:12px 16px}
+.dqq{font-size:21px;font-weight:900;margin-bottom:6px}
+.dqa{font-size:18.5px;line-height:1.55}
+.idea{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:12px 16px;font-size:20px;line-height:1.5}
 /* nav chrome */
 #progress{position:fixed;left:0;bottom:0;height:5px;background:var(--yellow);transition:width .3s;z-index:10}
 #pageno{position:fixed;right:16px;bottom:12px;color:#fff;font:700 14px var(--font);opacity:.75;z-index:10}
@@ -132,7 +147,6 @@ aside.notes{display:none!important}
   <aside class="notes">開場：今天用 18 頁講一件事——AI 換到沒看過的環境時，在拿不到原本訓練資料的情況下，怎麼自己適應。內容全部來自 wiki，數字都附出處。</aside>
 </section>
 
-<!-- 2 生活情境 -->
 <section class="slide">
   <div class="deco c" style="width:300px;height:300px;background:var(--blue-l);left:-80px;bottom:-90px"></div>
   <div class="deco dia" style="width:60px;height:60px;background:var(--yellow);right:330px;top:60px"></div>
@@ -151,7 +165,6 @@ aside.notes{display:none!important}
   <aside class="notes">用生活經驗引入「領域落差」。比喻出自 wiki 的 domain-shift 白話版。</aside>
 </section>
 
-<!-- 3 物件偵測 -->
 <section class="slide">
   <div class="deco sq" style="width:120px;height:120px;background:var(--green-l);right:40px;top:40px;transform:rotate(-10deg)"></div>
   <div class="deco c" style="width:60px;height:60px;background:var(--purple);left:40px;bottom:110px;opacity:.85"></div>
@@ -181,7 +194,6 @@ aside.notes{display:none!important}
   <aside class="notes">框旁的數字是模型的「信心分數」。偵測比分類多了「在哪裡」和「有幾個」。示意圖為自繪，不是論文圖。</aside>
 </section>
 
-<!-- 4 分數下滑 -->
 <section class="slide">
   <div class="deco c" style="width:260px;height:260px;background:var(--red-l);right:-60px;top:-60px"></div>
   <div class="deco tri" style="border-bottom-color:var(--yellow);left:960px;bottom:300px;opacity:.8"></div>
@@ -199,7 +211,6 @@ aside.notes{display:none!important}
   <aside class="notes">Cityscapes → Foggy Cityscapes。29.5 是 Source only，48.7 是 Oracle（用目標標註訓練），出自 DSOD Table 1。mAP 大致可理解成「框得準又認得對」的平均分。</aside>
 </section>
 
-<!-- 5 拿不到舊資料 -->
 <section class="slide">
   <div class="deco sq" style="width:180px;height:180px;background:var(--purple-l);left:-50px;top:250px;transform:rotate(20deg)"></div>
   <div class="deco c" style="width:50px;height:50px;background:var(--blue);right:300px;top:70px"></div>
@@ -219,45 +230,52 @@ aside.notes{display:none!important}
   <aside class="notes">這就是「無來源」（Source-Free）：調整時只有在舊環境訓練好的模型，以及新環境沒有標註的資料。</aside>
 </section>
 
-<!-- 6 Mean Teacher -->
 <section class="slide">
   <div class="deco dia" style="width:80px;height:80px;background:var(--green);right:380px;top:60px;opacity:.85"></div>
   <div class="deco c" style="width:220px;height:220px;background:var(--green-l);left:-70px;bottom:-70px"></div>
   <span class="kicker" style="background:var(--purple)">基本做法</span>
   <h2>自己出題、自己練習</h2>
   <div class="body">
-  <div class="row" style="align-items:center;gap:18px;max-width:900px">
-    <div class="card" style="border-color:var(--blue);background:var(--blue-l);flex:none;width:250px"><h3>🧑‍🏫 老師</h3><p>看清楚的照片<br>出「參考答案」</p></div>
-    <div class="arrow">→</div>
-    <div class="card" style="border-color:var(--pink);background:var(--pink-l);flex:none;width:250px"><h3>🧑‍🎓 學生</h3><p>看被弄亂的照片<br>照答案練習</p></div>
-    <div class="arrow">↺</div>
-    <div class="card" style="border-color:var(--green);background:var(--green-l);flex:none;width:250px"><h3>📈 老師</h3><p>慢慢吸收<br>學生的進步</p></div>
-  </div>
+  <div class="diagwrap" style="justify-content:flex-start;margin-bottom:6px"><svg class="diagram" style="width:1080px" viewBox="0 0 980 215" width="980" height="215" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M290,65.0 L690,65.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="490" y="52" text-anchor="middle" class="el">出「參考答案」（偽標籤）</text>
+<text x="490" y="70" text-anchor="middle" class="el">＝把知識傳給學生</text>
+<path d="M815,110 L815,175 L165,175 L165,116" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="490" y="200" text-anchor="middle" class="el">老師慢慢吸收學生的進步（移動平均）</text>
+<rect x="40" y="20" width="250" height="90" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="165.0" y="61.0" text-anchor="middle" class="nt">🧑‍🏫 老師</text>
+<text x="165.0" y="82.0" text-anchor="middle" class="ns">看清楚的照片</text>
+<rect x="690" y="20" width="250" height="90" rx="14" fill="#FDE6F1" stroke="#F27BB5" stroke-width="3"/>
+<text x="815.0" y="61.0" text-anchor="middle" class="nt">🧑‍🎓 學生</text>
+<text x="815.0" y="82.0" text-anchor="middle" class="ns">看被弄亂的照片</text>
+</svg></div>
   <div class="card" style="border-color:var(--red);background:var(--red-l);margin-top:28px;max-width:760px;flex:none">
     <p style="font-size:23px"><b>⚠️ 風險：</b>猜錯的也被當成正解，越練越歪。</p>
   </div>
   </div>
   <div class="foot"><span class="src">DSOD, p.1, p.3；wiki/concepts/mean-teacher.md、pseudo-label.md</span><span></span></div>
-  <aside class="notes">這叫 Mean Teacher；老師給的「參考答案」叫偽標籤（pseudo-label）。老師的權重是學生權重的移動平均（EMA）。目前多數 SFOD 方法都用這個框架（FALCON, p.1）。</aside>
+  <aside class="notes">這叫 Mean Teacher；老師給的「參考答案」叫偽標籤（pseudo-label）。學生用梯度更新；老師的權重是學生權重的指數移動平均（EMA），所以變化慢、比較穩。目前多數 SFOD 方法都用這個框架（FALCON, p.1）。</aside>
 </section>
 
-<!-- 7 來源偏差 -->
 <section class="slide">
   <div class="deco c" style="width:340px;height:340px;background:var(--yellow-l);right:-80px;bottom:-100px"></div>
-  <div class="deco sq" style="width:70px;height:70px;background:var(--pink);left:900px;top:70px;transform:rotate(15deg)"></div>
+  <div class="deco sq" style="width:70px;height:70px;background:var(--pink);left:980px;top:60px;transform:rotate(15deg)"></div>
   <span class="kicker" style="background:var(--yellow)">核心難題</span>
-  <h2>最大的麻煩：來源偏差</h2>
+  <h2>來源偏差：和領域落差差在哪？</h2>
   <div class="body">
-  <p class="lead">模型在學新環境，腦袋卻還用<b>舊環境的習慣</b>判斷——<br>像搬到台北，還用老家的路名找路。</p>
-  <p class="small" style="margin-top:24px;max-width:720px">只看得到新資料，更容易偏心。</p>
+  <div class="row" style="max-width:860px">
+    <div class="card" style="border-color:var(--blue);background:var(--blue-l)"><h3>領域落差</h3><p><b>資料</b>的問題：<br>考題變了（第 4 頁）</p></div>
+    <div class="card" style="border-color:var(--yellow);background:var(--yellow-l)"><h3>來源偏差</h3><p><b>模型</b>的問題：<br>換了考題，卻改不掉舊解法</p></div>
   </div>
-  <img class="char" src="../asset/char_bored_yellow.png" alt="質疑角色">
-  <div class="bubble" style="right:90px;bottom:270px">我以前都<br>這樣認的啊</div>
-  <div class="foot"><span class="src">DSOD, p.1–2；wiki/concepts/source-bias.md</span><span></span></div>
-  <aside class="notes">Source Bias：調整後仍偏向來源領域，泛化差，並在自我訓練中累積錯誤。</aside>
+  <p class="lead" style="font-size:25px!important;margin-top:24px;max-width:860px">沒有舊資料可對照，偏差更難修；<br>自己出題練習時，錯誤還會<b>越滾越大</b>。</p>
+  </div>
+  <img class="char" src="../asset/char_bored_yellow.png" alt="舊習慣角色" style="width:170px">
+  <div class="bubble" style="right:80px;bottom:250px">接下來的方法，<br>都在幫我放下<br>舊習慣！</div>
+  <div class="foot"><span class="src">DSOD, p.1–2；wiki/concepts/source-bias.md、domain-shift.md</span><span></span></div>
+  <aside class="notes">領域落差是「環境變了」這個事實；來源偏差是模型在調整過程中留下的後遺症：調整後仍偏向來源領域。一般跨領域方法（UDA）能同時看新舊資料學共通特徵，SFOD 只能看新資料，所以更容易偏；而自我訓練（第 6 頁）會讓錯誤累積。</aside>
 </section>
 
-<!-- 8 三條路 -->
 <section class="slide">
   <div class="deco dia" style="width:90px;height:90px;background:var(--blue);right:90px;top:60px;opacity:.85"></div>
   <span class="kicker" style="background:var(--blue)">地圖</span>
@@ -268,13 +286,12 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--pink)"><h3><span class="num" style="background:var(--pink)">2</span>認出沒見過的</h3><p>沒學過的東西也要框出來</p><p class="note" style="font-size:17px">SFUOD</p></div>
     <div class="card" style="border-color:var(--purple)"><h3><span class="num" style="background:var(--purple)">3</span>邊用邊學</h3><p>上線時才即時調整</p><p class="note" style="font-size:17px">TTAOD-F、VLOD-TTA</p></div>
   </div>
-  <p class="small" style="margin-top:22px">＋延伸：圖片分類也在解同一題（CGA）</p>
+  <p class="small" style="margin-top:22px">＋延伸思考：把圖片分類（CGA）和跨論文的點子帶回來</p>
   </div>
   <div class="foot"><span class="src">wiki/concepts/sfod-method-families.md</span><span></span></div>
   <aside class="notes">接下來依序介紹三條路。分類是本 wiki 的整理，不是單一論文的說法。</aside>
 </section>
 
-<!-- 9 DSOD -->
 <section class="slide">
   <div class="deco c" style="width:280px;height:280px;background:var(--green-l);right:-60px;top:-70px"></div>
   <div class="deco sq" style="width:60px;height:60px;background:var(--yellow);left:40px;bottom:130px;transform:rotate(30deg)"></div>
@@ -293,7 +310,48 @@ aside.notes{display:none!important}
   <aside class="notes"><b>注意</b>：DSOD 表格中 48.1 這列，各類別分數自己平均只有 46.4，論文前後不一致；依使用者決策採表格 mAP 欄，且不拿來和 Oracle 比較。融合權重超過約 0.4 後 AP 急降（Fig. 6）。另有不需 DINOv2 的輕量蒸餾版 46.9。</aside>
 </section>
 
-<!-- 10 FALCON -->
+<section class="slide detail">
+  <div class="deco c" style="width:160px;height:160px;background:var(--green-l);right:-40px;top:-40px"></div>
+  <span class="kicker" style="background:var(--green)">路線 1｜DSOD 架構</span>
+  <h2>DSOD 怎麼做：把顧問的看法「加」進來</h2>
+  <div class="diagwrap"><svg class="diagram" viewBox="0 0 1136 255" width="1136" height="255" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M60,95 L60,47 L180,47" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M60,165 L60,213 L180,213" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M430,47 L805,47 L805,93" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="615" y="38" text-anchor="middle" class="el">原本的看法</text>
+<path d="M430,213.0 L500,213.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M670,213 L805,213 L805,167" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="735" y="238" text-anchor="middle" class="el">對齊後的顧問意見</text>
+<path d="M870,130.0 L930,130.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M500,118 L432,78" fill="none" stroke="#5B5E72" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#ah)"/>
+<path d="M500,142 L432,182" fill="none" stroke="#5B5E72" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#ah)"/>
+<rect x="0" y="95" width="120" height="70" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="60.0" y="136.0" text-anchor="middle" class="nt">新環境照片</text>
+<rect x="180" y="10" width="250" height="74" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="305.0" y="43.0" text-anchor="middle" class="nt">原本的偵測器骨幹</text>
+<text x="305.0" y="64.0" text-anchor="middle" class="ns">ResNet-50｜懂車、懂人</text>
+<rect x="180" y="176" width="250" height="74" rx="14" fill="#DFF5E8" stroke="#3DBE6E" stroke-width="3"/>
+<text x="305.0" y="209.0" text-anchor="middle" class="nt">DINOv2 通才</text>
+<text x="305.0" y="230.0" text-anchor="middle" class="ns">凍結不動｜見多識廣</text>
+<rect x="500" y="176" width="170" height="74" rx="14" fill="#fff" stroke="#3DBE6E" stroke-width="3"/>
+<text x="585.0" y="209.0" text-anchor="middle" class="nt">SSE</text>
+<text x="585.0" y="230.0" text-anchor="middle" class="ns">調成相同尺寸</text>
+<rect x="500" y="93" width="170" height="74" rx="14" fill="#fff" stroke="#F5A623" stroke-width="3" stroke-dasharray="8 6"/>
+<text x="585.0" y="126.0" text-anchor="middle" class="nt">SAFR（訓練時）</text>
+<text x="585.0" y="147.0" text-anchor="middle" class="ns">物體區：原本≈顧問</text>
+<rect x="740" y="93" width="130" height="74" rx="14" fill="#EFE6FD" stroke="#9061E6" stroke-width="3"/>
+<text x="805.0" y="126.0" text-anchor="middle" class="nt">⊕ 相加</text>
+<text x="805.0" y="147.0" text-anchor="middle" class="ns">顧問意見 × w</text>
+<rect x="930" y="93" width="200" height="74" rx="14" fill="#fff" stroke="#4F7CE8" stroke-width="3"/>
+<text x="1030.0" y="126.0" text-anchor="middle" class="nt">Deformable-DETR</text>
+<text x="1030.0" y="147.0" text-anchor="middle" class="ns">偵測頭 → 框＋名字</text>
+</svg></div>
+  <div class="dqrow"><div class="dqlabel">設計討論</div><div class="dq" style="border-color:var(--green)"><div class="dqq">為什麼只用「相加」？</div><div class="dqa">兩邊特徵幾乎互不干擾，相加不會蓋掉原本的知識；換成複雜接法反而較差（43.2 vs 40.1～42.4）。</div></div><div class="dq" style="border-color:var(--yellow)"><div class="dqq">顧問意見加多少？</div><div class="dqa">先用少量新照片試不同 w，挑「再加就開始不穩」的轉折點，再慢慢加；超過約 0.4 分數急降。</div></div><div class="dq" style="border-color:var(--purple)"><div class="dqq">每個零件貢獻多少？</div><div class="dqa">基本師生 39.6 → 注入 43.0 → 前景對齊 45.5 → 自動權重 45.8 → 加 DRU 技巧 48.1。</div></div></div>
+  <div class="foot"><span class="src">DSOD, p.3–6、Table 4, p.9、Table 5, p.10、Fig. 6, p.10；wiki/sources/dsod-2026.md</span><span></span></div>
+  <aside class="notes">UFI＝注入 DINOv2 特徵（SSE 對齊＋相加）；SAFR＝用偽標籤框畫高斯熱圖，只在前景要求 CNN 特徵貼近 DINOv2；DAAW＝敏感度測試＋手肘點＋平方根暖身。推論要帶 DINOv2 → 另有蒸餾版 DSOD-Distill（46.9），使用時不需要 DINOv2。</aside>
+</section>
+
 <section class="slide">
   <div class="deco dia" style="width:110px;height:110px;background:var(--red-l);right:340px;top:40px"></div>
   <div class="deco c" style="width:70px;height:70px;background:var(--blue);left:-20px;top:300px;opacity:.85"></div>
@@ -308,11 +366,60 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--blue);text-align:center"><div style="font-size:22px">🚌 公車</div><div style="font-size:42px;font-weight:900;color:var(--blue)">+2.9</div></div>
   </div>
   </div>
+  <img class="char" src="../asset/char_determined_red.png" alt="專注角色" style="width:170px">
+  <div class="bubble" style="right:80px;bottom:250px">常見的汽車、行人<br>幾乎沒變，<br>難的反而進步最多！</div>
   <div class="foot"><span class="src">FALCON, Fig. 1, p.2、Table 8, p.8；wiki/sources/falcon-sfod-2026.md</span><span></span></div>
   <aside class="notes">遮罩在訓練前算一次，使用時不需要 OV-SAM，不會變慢。整體晴→霧從 45.0 → 46.9（Table 1, p.6）。汽車、行人幾乎沒變（−0.2、+0.1）。</aside>
 </section>
 
-<!-- 11 比進步 -->
+<section class="slide detail">
+  <div class="deco dia" style="width:70px;height:70px;background:var(--red-l);right:60px;top:40px"></div>
+  <span class="kicker" style="background:var(--green)">路線 1｜FALCON 架構</span>
+  <h2>FALCON 怎麼做：先畫重點，再要求「看這裡」</h2>
+  <div class="diagwrap"><svg class="diagram" viewBox="0 0 1136 250" width="1136" height="250" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M140,61.0 L250,61.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M430,61.0 L530,61.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M140,203.0 L250,203.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="195" y="185.0" text-anchor="middle" class="el">新計分</text><text x="195" y="203.0" text-anchor="middle" class="el">IRPL</text>
+<path d="M430,203.0 L530,203.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="480" y="195" text-anchor="middle" class="el">取注意力</text>
+<path d="M710,61 L845,61 L845,99" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M710,203 L845,203 L845,165" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="780" y="228" text-anchor="middle" class="el">要求看同一處</text>
+<path d="M930,132.0 L980,132.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="955" y="90" text-anchor="middle" class="el">訓練完成</text>
+<rect x="0" y="28" width="140" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="70.0" y="67.0" text-anchor="middle" class="nt">新環境照片</text>
+<rect x="250" y="28" width="180" height="66" rx="14" fill="#DFF5E8" stroke="#3DBE6E" stroke-width="3"/>
+<text x="340.0" y="57.0" text-anchor="middle" class="nt">OV-SAM</text>
+<text x="340.0" y="78.0" text-anchor="middle" class="ns">描輪廓高手（凍結）</text>
+<rect x="530" y="28" width="180" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="620.0" y="57.0" text-anchor="middle" class="nt">黑白遮罩</text>
+<text x="620.0" y="78.0" text-anchor="middle" class="ns">白＝物體｜只算一次</text>
+<rect x="0" y="170" width="140" height="66" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="70.0" y="199.0" text-anchor="middle" class="nt">老師</text>
+<text x="70.0" y="220.0" text-anchor="middle" class="ns">出參考答案</text>
+<rect x="250" y="170" width="180" height="66" rx="14" fill="#FDE6F1" stroke="#F27BB5" stroke-width="3"/>
+<text x="340.0" y="199.0" text-anchor="middle" class="nt">學生</text>
+<text x="340.0" y="220.0" text-anchor="middle" class="ns">照答案練習</text>
+<rect x="530" y="170" width="180" height="66" rx="14" fill="#fff" stroke="#F27BB5" stroke-width="3"/>
+<text x="620.0" y="199.0" text-anchor="middle" class="nt">注意力圖</text>
+<text x="620.0" y="220.0" text-anchor="middle" class="ns">學生在看哪裡</text>
+<rect x="760" y="99" width="170" height="66" rx="14" fill="#FCE3E3" stroke="#E24C4C" stroke-width="3"/>
+<text x="845.0" y="128.0" text-anchor="middle" class="nt">SPAR</text>
+<text x="845.0" y="149.0" text-anchor="middle" class="ns">注意力 ≈ 遮罩</text>
+<rect x="980" y="99" width="150" height="66" rx="14" fill="#fff" stroke="#9061E6" stroke-width="3"/>
+<text x="1055.0" y="128.0" text-anchor="middle" class="nt">目光更集中的</text>
+<text x="1055.0" y="149.0" text-anchor="middle" class="ns">偵測器</text>
+<text x="0" y="16" class="ph">訓練前（只做一次）</text>
+<text x="0" y="158" class="ph">訓練時（師生自學）</text>
+</svg></div>
+  <div class="dqrow"><div class="dqlabel">設計討論</div><div class="dq" style="border-color:var(--green)"><div class="dqq">為什麼用遮罩，不直接加特徵？</div><div class="dqa">遮罩只在訓練前算一次，使用時不需要 OV-SAM，不會變慢（和 DSOD 正好相反）。</div></div><div class="dq" style="border-color:var(--red)"><div class="dqq">進步真的來自「拉回目光」嗎？</div><div class="dqa">只拿遮罩篩參考答案進步有限；加上 SPAR 才明顯 → 關鍵是修正注意力本身。</div></div><div class="dq" style="border-color:var(--blue)"><div class="dqq">遮罩品質重要嗎？</div><div class="dqa">越精準越好：模型自己的注意力 45.8 < GSAM 46.2 < ESC-Net 46.5 < OV-SAM 46.9。</div></div></div>
+  <div class="foot"><span class="src">FALCON, p.2–4、Fig. 2, p.7–8、Table 5–6, p.8；wiki/sources/falcon-sfod-2026.md</span><span></span></div>
+  <aside class="notes">SPAR 損失＝L1＋Dice（λ1=1、λ2=2）。IRPL：老師學生一致的簡單框梯度縮小、不一致的保留修正訊號；前景／背景加權；熵正則避免常見類別主導。零件：基線 45.0 → 只加 SPAR 46.1、只加 IRPL 45.8、兩者 46.9（Table 5）。論文另有理論誤差上界推導，不放簡報。</aside>
+</section>
+
 <section class="slide">
   <div class="deco c" style="width:200px;height:200px;background:var(--purple-l);right:40px;top:40px"></div>
   <span class="kicker" style="background:var(--purple)">怎麼比較</span>
@@ -325,13 +432,10 @@ aside.notes{display:none!important}
   <p class="small" style="margin:10px 0 0 244px">灰色＝調整前的起點　綠色＝進步幅度（晴→霧，mAP）</p>
   <p class="lead" style="font-size:24px;margin-top:26px">兩篇用的基礎模型不同，<b>起點就不一樣</b>，所以要看各自進步多少。</p>
   </div>
-  <img class="char" src="../asset/char_smug_purple.png" alt="小技巧角色" style="width:180px">
-  <div class="bubble" style="right:80px;bottom:260px">起點不同，<br>要看進步多少！</div>
   <div class="foot"><span class="src">DSOD, Table 1, p.8；FALCON, Table 1, p.6；wiki/comparisons/results-comparison.md</span><span></span></div>
   <aside class="notes">兩篇 Source only 不同（29.5 vs 25.2），絕對分數不能直接比。DSOD 的 48.1 有表格不一致的疑慮（見第 9 頁備註）。</aside>
 </section>
 
-<!-- 12 SFUOD -->
 <section class="slide">
   <div class="deco sq" style="width:160px;height:160px;background:var(--pink-l);right:-30px;top:60px;transform:rotate(-14deg)"></div>
   <div class="deco dia" style="width:50px;height:50px;background:var(--green);left:60px;bottom:120px"></div>
@@ -346,11 +450,65 @@ aside.notes{display:none!important}
   </div>
   <p class="small" style="margin-top:10px">未知物體找回率：進步了，但約<b>十個只找到一個</b>。</p>
   </div>
+  <img class="char" src="../asset/char_confused_pink.png" alt="疑惑角色" style="width:170px">
+  <div class="bubble" style="right:80px;bottom:250px">我只學過車，<br>行人、腳踏車對我<br>都是「不認識」！</div>
   <div class="foot"><span class="src">SFUOD, p.1、Table 1, p.6；wiki/sources/sfuod-2025.md、open-set-detection.md</span><span></span></div>
   <aside class="notes">實驗設定：模型只學過汽車、卡車、公車；行人、騎士、機車、火車、腳踏車當作「不認識」。晴→霧：已知類別 26.2（既有 SFOD 方法最佳）→ 32.3；綜合分 8.9 → 16.0（Table 1, p.6）。反直覺：基本 Mean Teacher 在這個情境勝過進階方法。</aside>
 </section>
 
-<!-- 13 TTA -->
+<section class="slide detail">
+  <div class="deco sq" style="width:80px;height:80px;background:var(--pink-l);right:50px;top:40px;transform:rotate(12deg)"></div>
+  <span class="kicker" style="background:var(--pink)">路線 2｜SFUOD 架構</span>
+  <h2>SFUOD 怎麼做：兩個編碼器討論＋替「不認識」貼標籤</h2>
+  <div class="diagwrap"><svg class="diagram" viewBox="0 0 1136 290" width="1136" height="290" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M60,60 L60,43 L170,43" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M60,126 L60,143 L170,143" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M400,43 L430,43 L430,85 L460,85" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M400,143 L430,143 L430,101 L460,101" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M660,93.0 L720,93.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M120,238.0 L170,238.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M400,238.0 L460,238.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="430" y="203" text-anchor="middle" class="el">其餘的框</text>
+<path d="M660,238.0 L720,238.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M890,238 L1040,238 L1040,201" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M285,266 L285,280 L1080,280 L1080,201" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M1040,135 L1040,93 L890,93" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="965" y="84" text-anchor="middle" class="el">訓練學生</text>
+<rect x="0" y="60" width="120" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="60.0" y="99.0" text-anchor="middle" class="nt">新環境照片</text>
+<rect x="170" y="10" width="230" height="66" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="285.0" y="39.0" text-anchor="middle" class="nt">原本的編碼器</text>
+<text x="285.0" y="60.0" text-anchor="middle" class="ns">帶著舊環境知識</text>
+<rect x="170" y="110" width="230" height="66" rx="14" fill="#DFF5E8" stroke="#3DBE6E" stroke-width="3"/>
+<text x="285.0" y="139.0" text-anchor="middle" class="nt">輔助目標編碼器</text>
+<text x="285.0" y="160.0" text-anchor="middle" class="ns">只看新環境（留最重要的特徵）</text>
+<rect x="460" y="60" width="200" height="66" rx="14" fill="#EFE6FD" stroke="#9061E6" stroke-width="3"/>
+<text x="560.0" y="89.0" text-anchor="middle" class="nt">協作層 ×3</text>
+<text x="560.0" y="110.0" text-anchor="middle" class="ns">兩邊意見一起討論</text>
+<rect x="720" y="60" width="170" height="66" rx="14" fill="#fff" stroke="#4F7CE8" stroke-width="3"/>
+<text x="805.0" y="89.0" text-anchor="middle" class="nt">解碼器</text>
+<text x="805.0" y="110.0" text-anchor="middle" class="ns">→ 預測</text>
+<rect x="0" y="210" width="120" height="56" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="60.0" y="244.0" text-anchor="middle" class="nt">老師的候選框</text>
+<rect x="170" y="210" width="230" height="56" rx="14" fill="#fff" stroke="#4F7CE8" stroke-width="3"/>
+<text x="285.0" y="234.0" text-anchor="middle" class="nt">已知：信心 &gt; 0.3</text>
+<text x="285.0" y="255.0" text-anchor="middle" class="ns">車、卡車、公車</text>
+<rect x="460" y="210" width="200" height="56" rx="14" fill="#FDE6F1" stroke="#F27BB5" stroke-width="3"/>
+<text x="560.0" y="234.0" text-anchor="middle" class="nt">PAUL</text>
+<text x="560.0" y="255.0" text-anchor="middle" class="ns">像不像「一個東西」？</text>
+<rect x="720" y="210" width="170" height="56" rx="14" fill="#fff" stroke="#F27BB5" stroke-width="3"/>
+<text x="805.0" y="244.0" text-anchor="middle" class="nt">標成「不認識」</text>
+<rect x="950" y="135" width="180" height="66" rx="14" fill="#FEF0D6" stroke="#F5A623" stroke-width="3"/>
+<text x="1040.0" y="164.0" text-anchor="middle" class="nt">練習用答案</text>
+<text x="1040.0" y="185.0" text-anchor="middle" class="ns">已知＋不認識</text>
+<text x="0" y="195" class="ph">老師這一側：準備練習答案</text>
+</svg></div>
+  <div class="dqrow"><div class="dqlabel">設計討論</div><div class="dq" style="border-color:var(--purple)"><div class="dqq">兩個零件各救什麼？</div><div class="dqa">協作調整救「已知」：22.97→30.63；PAUL 救「未知」：找回率 3.60→6.46；合起來 32.32／10.59。</div></div><div class="dq" style="border-color:var(--pink)"><div class="dqq">為什麼不能只看信心挑未知？</div><div class="dqa">老師沒學過未知，信心本來就低；只看信心找回率 3.56，用 PAUL 10.59。</div></div><div class="dq" style="border-color:var(--blue)"><div class="dqq">協作層越多越好嗎？</div><div class="dqa">不是：插 3 層最好，再多反而下降。</div></div></div>
+  <div class="foot"><span class="src">SFUOD, p.4–7、Table 3–4, 7, p.7；wiki/sources/sfuod-2025.md、collaborative-tuning-paul.md</span><span></span></div>
+  <aside class="notes">PAUL：先找出已知物體特徵的主軸，把其餘候選框投影上去，用 cosine 相似度算「像物體程度」；高於已知平均、或未知信心夠高的，就標成 unknown。反直覺發現：進階 SFOD 方法讓老師更新太慢，在這個情境反而輸給基本 Mean Teacher（p.7）。</aside>
+</section>
+
 <section class="slide">
   <div class="deco c" style="width:260px;height:260px;background:var(--blue-l);left:-80px;top:-80px"></div>
   <div class="deco tri" style="border-bottom-color:var(--purple);right:330px;top:70px;opacity:.7"></div>
@@ -367,7 +525,6 @@ aside.notes{display:none!important}
   <aside class="notes">TTA 在乎的成本不同：不是訓練多久，而是每張圖處理多快、用多少記憶體。</aside>
 </section>
 
-<!-- 14 TTAOD-F -->
 <section class="slide">
   <div class="deco sq" style="width:90px;height:90px;background:var(--yellow);right:360px;top:50px;transform:rotate(18deg);opacity:.85"></div>
   <span class="kicker" style="background:var(--purple)">路線 3｜TTAOD-F</span>
@@ -383,13 +540,56 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--red)"><p style="font-size:19px">代價：每張圖處理時間</p><div class="stat"><span class="big" style="font-size:44px;color:var(--red)">約 3 倍</span><span class="unit">213 → 694 ms</span></div></div>
   </div>
   </div>
-  <img class="char" src="../asset/char_struggle_blue.png" alt="卡關角色" style="width:180px">
-  <div class="bubble" style="right:80px;bottom:260px">變準了，但每張圖<br>慢了約 3 倍！</div>
+  <img class="char" src="../asset/char_struggle_blue.png" alt="卡關角色" style="width:170px">
+  <div class="bubble" style="right:80px;bottom:250px">上線即時用的系統，<br>速度也是成績<br>的一部分。</div>
   <div class="foot"><span class="src">TTAOD-F, Table 1, p.7、Table 9, p.14；wiki/sources/ttaod-f-2025.md</span><span></span></div>
   <aside class="notes">44.8 → 56.2 是 Pascal-C 的 AP50（直接用 → TTAOD-F）。時間為 TTAOD-F 論文自己量的 COCO-C 數字。「便條紙」＝提示調整（prompt tuning）；「筆記本」＝記憶庫（每類最多 20 個例子）。</aside>
 </section>
 
-<!-- 15 VLOD-TTA -->
+<section class="slide detail">
+  <div class="deco c" style="width:130px;height:130px;background:var(--purple-l);right:-30px;top:-30px"></div>
+  <span class="kicker" style="background:var(--purple)">路線 3｜TTAOD-F 架構</span>
+  <h2>TTAOD-F 怎麼做：只改便條紙，帶著筆記本上考場</h2>
+  <div class="diagwrap"><svg class="diagram" viewBox="0 0 1136 285" width="1136" height="285" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M180,43.0 L240,43.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M180,143.0 L240,143.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M490,43 L525,43 L525,85 L560,85" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M490,143 L525,143 L525,101 L560,101" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M760,93.0 L830,93.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M660,126 L660,210" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="670" y="175" text-anchor="start" class="el">存下高信心的框</text>
+<path d="M810,243 L980,243 L980,126" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="895" y="235" text-anchor="middle" class="el">① 校正分數</text>
+<path d="M560,243 L90,243 L90,176" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="325" y="235" text-anchor="middle" class="el">② 貼到沒有答案的圖</text>
+<rect x="0" y="10" width="180" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="90.0" y="39.0" text-anchor="middle" class="nt">文字指令</text>
+<text x="90.0" y="60.0" text-anchor="middle" class="ns">「飛機. 腳踏車. 鳥.」</text>
+<rect x="0" y="110" width="180" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="90.0" y="139.0" text-anchor="middle" class="nt">測試照片</text>
+<text x="90.0" y="160.0" text-anchor="middle" class="ns">一張一張來</text>
+<rect x="240" y="10" width="250" height="66" rx="14" fill="#EFE6FD" stroke="#9061E6" stroke-width="3"/>
+<text x="365.0" y="39.0" text-anchor="middle" class="nt">文字編碼器（凍結）</text>
+<text x="365.0" y="60.0" text-anchor="middle" class="ns">＋文字便條紙</text>
+<rect x="240" y="110" width="250" height="66" rx="14" fill="#EFE6FD" stroke="#9061E6" stroke-width="3"/>
+<text x="365.0" y="139.0" text-anchor="middle" class="nt">影像編碼器（凍結）</text>
+<text x="365.0" y="160.0" text-anchor="middle" class="ns">＋每層 10 張影像便條紙</text>
+<rect x="560" y="60" width="200" height="66" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="660.0" y="89.0" text-anchor="middle" class="nt">Grounding DINO</text>
+<text x="660.0" y="110.0" text-anchor="middle" class="ns">圖文融合 → 預測</text>
+<rect x="830" y="60" width="300" height="66" rx="14" fill="#fff" stroke="#F27BB5" stroke-width="3"/>
+<text x="980.0" y="89.0" text-anchor="middle" class="nt">老師出參考答案</text>
+<text x="980.0" y="110.0" text-anchor="middle" class="ns">學生只更新便條紙</text>
+<rect x="560" y="210" width="250" height="66" rx="14" fill="#FEF0D6" stroke="#F5A623" stroke-width="3"/>
+<text x="685.0" y="239.0" text-anchor="middle" class="nt">📒 筆記本（記憶庫）</text>
+<text x="685.0" y="260.0" text-anchor="middle" class="ns">每類最多 20 個有把握的例子</text>
+</svg></div>
+  <div class="dqrow"><div class="dqlabel">設計討論</div><div class="dq" style="border-color:var(--purple)"><div class="dqq">為什麼只調便條紙？</div><div class="dqa">整個大模型一起調，會削弱原本的能力、對錯誤答案更敏感；只調提示又快又省。</div></div><div class="dq" style="border-color:var(--pink)"><div class="dqq">便條紙怎麼起步？</div><div class="dqa">只調文字 +0.6；只調影像反而 −3.4；用第一張圖幫影像便條紙「暖身」後，兩者合起來 53.9。</div></div><div class="dq" style="border-color:var(--yellow)"><div class="dqq">筆記本有多大幫助？</div><div class="dqa">再加「貼圖」54.9、加「校正分數」56.2；筆記本太小不具代表、太大混入錯誤，取 20。</div></div></div>
+  <div class="foot"><span class="src">TTAOD-F, p.2, p.4–6、Table 3, p.8、p.9；wiki/sources/ttaod-f-2025.md、prompt-tuning.md</span><span></span></div>
+  <aside class="notes">數字為 Pascal-C 平均 AP50，直接用為 44.8。①Memory Enhancement：用各類 DINOv2 特徵原型替高信心預測重新加分（免訓練，單獨使用 46.1）。②Memory Hallucination：沒有可用偽標籤的圖，從筆記本隨機貼最多 3 個例子進去。老師的便條紙是學生的 EMA（γ=0.999）。</aside>
+</section>
+
 <section class="slide">
   <div class="deco c" style="width:240px;height:240px;background:var(--purple-l);right:-60px;bottom:180px"></div>
   <span class="kicker" style="background:var(--purple)">路線 3｜VLOD-TTA</span>
@@ -415,43 +615,116 @@ aside.notes{display:none!important}
   <aside class="notes">比較為 VLOD-TTA 論文量測（COCO-C、Grounding DINO）。它不需要老師模型，每張圖只調一步就重置。仍比直接用慢約 2.5 倍（531.6 vs 210.6 ms）。另一招：每類 16 句描述，挑最符合這張圖的 1/4。</aside>
 </section>
 
-<!-- 16 CGA -->
+<section class="slide detail">
+  <div class="deco dia" style="width:60px;height:60px;background:var(--purple-l);right:70px;top:46px"></div>
+  <span class="kicker" style="background:var(--purple)">路線 3｜VLOD-TTA 架構</span>
+  <h2>VLOD-TTA 怎麼做：不要老師，相信成群的框</h2>
+  <div class="diagwrap"><svg class="diagram" viewBox="0 0 1136 262" width="1136" height="262" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5B5E72"/></marker></defs>
+<path d="M160,53 L190,53 L190,110 L220,110" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M160,183 L190,183 L190,126 L220,126" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M440,118.0 L500,118.0" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M650,110 L685,110 L685,48 L720,48" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M650,126 L685,126 L685,188 L720,188" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M930,48 L960,48 L960,110 L990,110" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M930,188 L960,188 L960,126 L990,126" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<path d="M1060,151 L1060,250 L330,250 L330,151" fill="none" stroke="#5B5E72" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="695" y="242" text-anchor="middle" class="el">下一張照片從頭開始（不累積）</text>
+<rect x="0" y="20" width="160" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="80.0" y="59.0" text-anchor="middle" class="nt">一張測試照片</text>
+<rect x="0" y="150" width="160" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="80.0" y="179.0" text-anchor="middle" class="nt">每類 16 句描述</text>
+<text x="80.0" y="200.0" text-anchor="middle" class="ns">GPT 生成</text>
+<rect x="220" y="85" width="220" height="66" rx="14" fill="#E3EBFD" stroke="#4F7CE8" stroke-width="3"/>
+<text x="330.0" y="114.0" text-anchor="middle" class="nt">偵測器（凍結）</text>
+<text x="330.0" y="135.0" text-anchor="middle" class="ns">＋小轉接頭 Adapter</text>
+<rect x="500" y="85" width="150" height="66" rx="14" fill="#fff" stroke="#8A8DA0" stroke-width="3"/>
+<text x="575.0" y="114.0" text-anchor="middle" class="nt">大量候選框</text>
+<text x="575.0" y="135.0" text-anchor="middle" class="ns">GD 約 900 個</text>
+<rect x="720" y="15" width="210" height="66" rx="14" fill="#EFE6FD" stroke="#9061E6" stroke-width="3"/>
+<text x="825.0" y="44.0" text-anchor="middle" class="nt">IPS 挑描述</text>
+<text x="825.0" y="65.0" text-anchor="middle" class="ns">留最相關的 1/4</text>
+<rect x="720" y="155" width="210" height="66" rx="14" fill="#DFF5E8" stroke="#3DBE6E" stroke-width="3"/>
+<text x="825.0" y="184.0" text-anchor="middle" class="nt">IWE 成群加權</text>
+<text x="825.0" y="205.0" text-anchor="middle" class="ns">重疊越多越可信</text>
+<rect x="990" y="85" width="140" height="66" rx="14" fill="#FDE6F1" stroke="#F27BB5" stroke-width="3"/>
+<text x="1060.0" y="114.0" text-anchor="middle" class="nt">更新一步</text>
+<text x="1060.0" y="135.0" text-anchor="middle" class="ns">輸出 → 重置</text>
+</svg></div>
+  <div class="dqrow"><div class="dqlabel">設計討論</div><div class="dq" style="border-color:var(--green)"><div class="dqq">為什麼不要老師？</div><div class="dqa">老師要多一個模型、多跑一次 → 記憶體 11.4 vs 3.8 GB；準確度差不多（26.0 vs 26.2）。</div></div><div class="dq" style="border-color:var(--pink)"><div class="dqq">為什麼每張圖調完就重置？</div><div class="dqa">作者認為一張圖調出的參數，不一定適合下一張；所以只調一步、用完就還原。</div></div><div class="dq" style="border-color:var(--purple)"><div class="dqq">兩個零件都有用嗎？</div><div class="dqa">一般熵 28.3 → 成群加權 29.3 → 再挑描述 29.6；描述全部平均反而變差（−0.35）。</div></div></div>
+  <div class="foot"><span class="src">VLOD-TTA, p.4–8、Table 3, p.11、Table 5, p.11、Fig. 5a, p.13；wiki/sources/vlod-tta-2026.md</span><span></span></div>
+  <aside class="notes">IWE：同類別、IoU ≥ θ 的框連成一群，權重＝群大小^γ（γ=1.1），用加權平均熵當調整目標。IPS：每句描述和本圖候選框特徵的平均相似度排序，留前 25%，再加可學殘差 Δ，與原分數混合（λ）。轉接頭位置：YOLO-World 在骨幹與 neck，Grounding DINO 只在文字編碼器。消融數字為 YOLO-World、Watercolor mAP。</aside>
+</section>
+
 <section class="slide">
-  <div class="deco dia" style="width:70px;height:70px;background:var(--yellow);left:960px;top:60px"></div>
   <div class="deco c" style="width:200px;height:200px;background:var(--yellow-l);left:-60px;bottom:-40px"></div>
-  <span class="kicker" style="background:var(--yellow)">延伸｜CGA（圖片分類）</span>
-  <h2>分類也在解同一題</h2>
-  <div class="body">
-  <p class="lead" style="font-size:25px">卡車常被認成公車。<br>CGA 請 CLIP 想一想：</p>
-  <div class="card" style="border-color:var(--yellow);background:#fff;margin-top:20px;max-width:640px;flex:none;text-align:center">
-    <p style="font-size:30px;font-weight:900">「一台<span style="color:var(--blue)">看起來像公車</span>的<span style="color:var(--red)">卡車</span>」</p>
+  <div class="deco dia" style="width:60px;height:60px;background:var(--yellow);left:1000px;top:50px"></div>
+  <span class="kicker" style="background:var(--yellow)">延伸思考｜CGA（圖片分類）</span>
+  <h2>把「容易搞混」的點子帶回偵測</h2>
+  <div class="body" style="padding-bottom:40px">
+  <div class="row" style="gap:22px;max-width:930px;align-items:stretch">
+    <div class="card" style="border-color:var(--yellow);background:var(--yellow-l);flex:0 0 330px">
+      <h3>CGA 的做法</h3>
+      <p style="font-size:19px">① 找出誰常被當成誰<br><span class="note">卡車→公車常見，反過來很少</span></p>
+      <p style="font-size:19px;margin-top:8px">② 請 CLIP 想「看起來像公車的卡車」</p>
+      <p style="font-size:19px;margin-top:8px">③ 把舊模型往 CLIP 的看法拉近</p>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="idea"><b>💡 1</b> 騎士常被當成行人，邊用邊學還會加重（騎士分數 6.3 → 1.9）。加入「看起來像行人的騎士」能擋住嗎？</div>
+      <div class="idea"><b>💡 2</b> 卡車、公車在偵測裡也是難類別，能用同樣的描述補強嗎？</div>
+      <div class="idea"><b>💡 3</b> 參考答案的門檻，能不能依「被誤認的方向」調嚴或調鬆？</div>
+      <p class="note" style="margin-top:0">以上為跨論文的延伸發想，不是論文結論</p>
+    </div>
   </div>
-  <p class="small" style="margin-top:20px">一樣是<b>借用通才模型</b>，題目換成「整張圖是什麼」。</p>
   </div>
-  <div class="foot"><span class="src">CGA, p.2、p.5；wiki/sources/cga-2026.md、class-confusion.md</span><span></span></div>
-  <aside class="notes">CGA 不是物件偵測，是圖片分類，只作延伸。四個資料集都小幅超越前作，大資料集較明顯（如 DomainNet-126：85.0 → 86.6）。</aside>
+  <img class="char" src="../asset/char_guide_blue.png" alt="主講角色" style="width:140px;right:40px;bottom:50px">
+  <div class="bubble" style="right:30px;bottom:205px;max-width:200px;font-size:19px">你還想得到哪些<br>「長得很像」<br>的東西？</div>
+  <div class="foot"><span class="src">CGA, p.2–5；VLOD-TTA, Table 12, p.22–23；FALCON, Table 8, p.8；wiki/comparisons/ideas.md（X1、X6）</span><span></span></div>
+  <aside class="notes">發想 1 最有根據：VLOD-TTA 的失敗分析指出零樣本模型偏向把騎士當行人，IWE 會把模稜兩可的騎士再推向行人（Cityscapes：騎士 AP 6.3 → 1.9、行人 17.8 → 16.5）；把兩類合併後反而進步——這正是 CGA 說的「有方向的混淆」。風險：CGA 指出每句混淆提示約多 29 MB 記憶體，而邊用邊學本來就在意資源。發想 2：FALCON 中卡車、公車屬少見類別。發想 3：混淆不對稱，而偵測靠信心門檻篩參考答案。全部出自 wiki/comparisons/ideas.md。</aside>
 </section>
 
-<!-- 17 限制 -->
 <section class="slide">
-  <div class="deco sq" style="width:130px;height:130px;background:var(--red-l);right:60px;top:40px;transform:rotate(12deg)"></div>
-  <span class="kicker" style="background:var(--red)">誠實面對</span>
-  <h2>還沒解決的事</h2>
-  <div class="body">
-  <ul class="pts" style="--c:var(--red)">
-    <li>沒見過的東西，只找回約十分之一</li>
-    <li>邊用邊學仍比直接用慢約 2.5 倍</li>
-    <li>行車場景小東西多，進步有限</li>
-    <li>論文數字也會出錯，要自己驗算</li>
-  </ul>
+  <div class="deco c" style="width:220px;height:220px;background:var(--purple-l);right:-60px;top:-60px"></div>
+  <div class="deco sq" style="width:60px;height:60px;background:var(--green);left:60px;bottom:110px;transform:rotate(18deg)"></div>
+  <span class="kicker" style="background:var(--purple)">延伸思考｜跨論文發想</span>
+  <h2>還可以怎麼做？三個有根據的發想</h2>
+  <div class="body" style="padding-bottom:40px">
+  <div class="row" style="max-width:1140px;gap:20px">
+    <div class="card" style="border-color:var(--green)"><h3 style="font-size:24px">🔍 小東西框不成群</h3>
+      <p style="font-size:19px">改用「物體遮罩」判斷哪裡有東西？</p>
+      <p class="note" style="font-size:15px">根據：FALCON 的遮罩 × VLOD-TTA 小物體弱</p>
+      <p style="font-size:16px;color:var(--red);margin-top:8px">⚠️ 即時描輪廓會更慢</p></div>
+    <div class="card" style="border-color:var(--purple)"><h3 style="font-size:24px">⚡ 不用每張都重新訓練</h3>
+      <p style="font-size:19px">只靠「查筆記＋挑描述」就調整？光查筆記就 44.8 → 46.1</p>
+      <p class="note" style="font-size:15px">根據：TTAOD-F × VLOD-TTA 作者的未來方向</p>
+      <p style="font-size:16px;color:var(--red);margin-top:8px">⚠️ 查筆記也要額外算特徵</p></div>
+    <div class="card" style="border-color:var(--blue)"><h3 style="font-size:24px">🔎 把照片放大看</h3>
+      <p style="font-size:19px">640 → 1024，行車場景直接用就 18.8 → 28.5<span class="note" style="font-size:14px">（YOLO-World、Cityscapes）</span></p>
+      <p class="note" style="font-size:15px">根據：VLOD-TTA × DSOD 也說大尺寸可能更好</p>
+      <p style="font-size:16px;color:var(--red);margin-top:8px">⚠️ 訓練、運算更重</p></div>
   </div>
-  <img class="char" src="../asset/char_dizzy_yellow.png" alt="混亂角色" style="width:180px">
-  <div class="bubble" style="right:80px;bottom:260px">論文的數字<br>也要自己驗算！</div>
-  <div class="foot"><span class="src">SFUOD, Table 1, p.6；VLOD-TTA, Table 5, p.11、p.9；DSOD, Table 1, p.8</span><span></span></div>
-  <aside class="notes">第 4 點：製作這份簡報時發現 DSOD、FALCON、CGA、VLOD-TTA 都有內文與表格不一致的地方，紀錄在各 wiki 頁的「矛盾」段。</aside>
+  <p class="note" style="margin-top:14px">以上為跨論文的延伸發想，不是論文結論；每條都標出可能行不通的原因</p>
+  </div>
+  <div class="foot"><span class="src">FALCON, p.3；VLOD-TTA, p.15、Table 14, p.23；TTAOD-F, Table 3, p.8；DSOD, p.7；wiki/comparisons/ideas.md（X2、X3、X5）</span><span></span></div>
+  <aside class="notes">X2：IWE 依重疊群加權，小物體不易成群（VLOD-TTA p.15）；FALCON 的不分類別遮罩不靠框重疊，但它是離線算的，邊用邊學沒有「訓練前」。X3：VLOD-TTA 作者的未來方向是免梯度調整；TTAOD-F 的記憶校正是免訓練的，單獨用 Pascal-C 44.8 → 46.1，但需要 DINOv2 特徵。X5：Cityscapes 直接用 640：18.8、1024：28.5；VLOD-TTA 1024 達 31.2（Table 14）；DSOD 作者也提到更大輸入可能更好但訓練更重（p.7）。</aside>
 </section>
 
-<!-- 18 小測驗 -->
+<section class="slide">
+  <div class="deco sq" style="width:120px;height:120px;background:var(--green-l);right:60px;top:40px;transform:rotate(12deg)"></div>
+  <span class="kicker" style="background:var(--blue)">總結</span>
+  <h2>這個領域：做到了什麼、還差什麼</h2>
+  <div class="body">
+  <div class="row" style="max-width:1080px">
+    <div class="card" style="border-color:var(--green);background:var(--green-l)"><h3>✅ 已經做到</h3>
+      <ul class="pts" style="--c:var(--green);gap:10px"><li style="font-size:24px">沒有舊資料，霧天也能進步約 19～22 分</li><li style="font-size:24px">借用通才模型，成為主流做法</li><li style="font-size:24px">開始能框出「沒見過的東西」</li><li style="font-size:24px">邊用邊學變省：記憶體 11.4 → 3.8 GB</li></ul></div>
+    <div class="card" style="border-color:var(--red);background:var(--red-l)"><h3>🧩 還待解決</h3>
+      <ul class="pts" style="--c:var(--red);gap:10px"><li style="font-size:24px">沒見過的東西，只找回約十分之一</li><li style="font-size:24px">邊用邊學仍比直接用慢約 2.5 倍</li><li style="font-size:24px">行車場景小東西多，只進步 1～2 分</li><li style="font-size:24px">各篇起點不同，缺少公平的比較</li></ul></div>
+  </div>
+  </div>
+  <div class="foot"><span class="src">DSOD, Table 1, p.8；FALCON, Table 1, p.6；SFUOD, Table 1, p.6；VLOD-TTA, p.9、Table 5, p.11；wiki/comparisons/results-comparison.md</span><span></span></div>
+  <aside class="notes">「19～22 分」＝晴→霧進步幅度（DSOD +18.6、FALCON +21.7）。「通才模型」：DSOD（DINOv2）、FALCON（OV-SAM）、TTAOD-F／VLOD-TTA（圖文偵測器）。「1～2 分」：VLOD-TTA 在 Cityscapes、BDD100K 平均 +1.0（YOLO-World）、+1.6（Grounding DINO）mAP。</aside>
+</section>
+
 <section class="slide">
   <div class="deco c" style="width:300px;height:300px;background:var(--green-l);right:-70px;top:-90px"></div>
   <div class="deco dia" style="width:60px;height:60px;background:var(--pink);left:1000px;bottom:330px"></div>
@@ -461,8 +734,9 @@ aside.notes{display:none!important}
   <div class="q" data-quiz><div class="qq">Q1. 晴天訓練的模型到霧天表現變差，這叫什麼？<span class="hint">點我</span></div><div class="qa">領域落差（Domain Shift）：訓練的世界和使用的世界不一樣。</div></div>
   <div class="q" data-quiz><div class="qq">Q2.「無來源」最難在哪裡？<span class="hint">點我</span></div><div class="qa">拿不到原本的訓練資料，只剩舊模型＋沒有答案的新照片。</div></div>
   <div class="q" data-quiz><div class="qq">Q3. 邊用邊學（TTA）和前面的方法差在哪？<span class="hint">點我</span></div><div class="qa">調整的時間點：上線時一張一張即時調整，而不是上線前先調好。</div></div>
+  <div class="q" data-quiz><div class="qq">Q4. VLOD-TTA 為什麼比較相信「一大群重疊的框」？<span class="hint">點我</span></div><div class="qa">很多框都同意的地方，多半真的有東西；零星幾個框，多半是看錯。</div></div>
   </div>
-  <div class="foot"><span class="src">wiki/glossary.md；wiki/concepts/domain-shift.md、source-free-adaptation.md、test-time-adaptation.md</span><span></span></div>
+  <div class="foot"><span class="src">wiki/glossary.md；concepts/domain-shift、source-free-adaptation、test-time-adaptation；VLOD-TTA, p.6</span><span></span></div>
   <aside class="notes">收尾：三條路——請通才幫忙、認出沒見過的、邊用邊學。所有數字與出處都可在 wiki 回查。</aside>
 </section>
 

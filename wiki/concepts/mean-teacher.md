@@ -28,5 +28,12 @@ updated: 2026-11-21
 ## 弱點
 - 老師一開始只懂來源領域，偽標籤有偏差，錯誤會在自我訓練中被放大 → [[source-bias]]。（DSOD, p.1, p.5）
 
+## 和[[knowledge-distillation|知識蒸餾]]有什麼不同？
+| | Mean Teacher | 知識蒸餾 |
+|---|---|---|
+| 老師從哪來 | 學生自己的移動平均，跟著學生一起變（DSOD, p.3） | 另一個已經訓練好的（通常更大的）模型（DSOD, p.6） |
+| 目的 | 沒有答案時自己產生參考答案 | 把大模型的本事搬到小模型 |
+| 本 wiki 例子 | 多數 SFOD、TTAOD-F | DSOD-Distill（雙老師：EMA 老師＋DSOD 靜態老師） |
+
 ## 相關
 [[source-free-adaptation]] · [[dsod-2026]]

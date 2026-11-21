@@ -5,7 +5,7 @@ tags: [sfod, vfm, ov-sam, mean-teacher, noisy-label, long-tail]
 sources: [falcon-sfod-2026]
 raw: raw/FALCON-SFOD_Foundation_Model_Priors_Object_Focus_SFOD_arXiv2026_[AW].pdf
 venue: arXiv 2512.17514v3（2026-02）
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 # FALCON-SFOD（2026）
 
@@ -51,6 +51,18 @@ updated: 2026-11-21
 ## 限制
 - S→C 只比 DRU 高 0.1（58.8 vs 58.7）；K→C 只比 SF-YOLO 高 0.7（50.1 vs 49.4）。（Table 1, p.6）
 - 需事先對每張目標影像跑一次分割模型（一次性前處理成本）。（FALCON, p.2）
+
+## 設計決策與消融證據
+| 設計 | 為什麼 | 證據 |
+|---|---|---|
+| 用遮罩規範特徵，而非只修偽標籤 | 偽標籤差的根源是特徵注意力分散 | 只拿遮罩篩偽標籤進步有限；加 SPAR 損失才明顯（Fig. 2, p.7–8） |
+| 遮罩離線算一次 | 訓練與推論都不呼叫基礎模型 | 前處理約 17 分鐘，為訓練時間 3.8%（p.15，以 GSAM 計） |
+| 遮罩越準越好 | 遮罩語意越對齊，規範越有效 | 源模型注意力 45.8 < GSAM 46.2 < ESC-Net 46.5 < OV-SAM 46.9（Table 6, p.8） |
+| IRPL 三部件 | 交叉熵梯度無上限、偵測前景背景不平衡、常見類別主導 | peak-adjust 55.9 → +前背景加權 56.3 → +熵正則 56.8（S→C，Table 7, p.8） |
+
+## 作者提到的限制與未來方向
+- 結論未列限制或未來工作。（p.8）
+- 補充材料指出額外成本只在一次性前處理（約 17 分鐘、峰值 18 GB，訓練本身 ≤ 9.6 GB）。（p.15）
 
 ## 矛盾
 - 內文寫「贏 SF-YOLO 4.9%」（p.6），但 Table 1 為 46.9 − 42.5 = **4.4**。依規則以表格為準。

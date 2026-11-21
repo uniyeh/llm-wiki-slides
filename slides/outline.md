@@ -1,38 +1,44 @@
 ---
-title: 簡報大綱（OUTLINE）
+title: 簡報大綱（OUTLINE）v3
 type: outline
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025, vlod-tta-2026]
-updated: 2026-11-21
+updated: 2026-11-22
 ---
-# 換了環境，AI 還認得出來嗎？——SF-DAOD 入門（18 頁）
+# 換了環境，AI 還認得出來嗎？——SF-DAOD 入門（24 頁）
 
-受眾：非 AI 背景｜語言：繁體中文｜規則：每頁一個重點、正文 ≤ 60 字或 ≤ 4 條列、每頁標出處、內容只取自 wiki。
+v2 依使用者回饋（2026-11-22）：每個方法改為「概要＋架構與設計討論」2 頁；第 6 頁箭頭加說明；第 7 頁改為「來源偏差 vs 領域落差」；吉祥物台詞不得複述內文；CGA 改為延伸發想；結尾改為「做到了什麼、還差什麼」。
 
-| # | 段落 | 標題 | 重點（正文） | 對應 wiki | 吉祥物提醒 |
-|---|---|---|---|---|---|
-| 1 | 引入 | 換了環境，AI 還認得出來嗎？ | 封面：無來源領域自適應物件偵測入門 | [[index]] | —（幾何圖形） |
-| 2 | 引入 | 新手駕駛的霧夜 | 只在晴天練車的新手第一次霧夜上路，認不出路標；AI 也會這樣 | [[domain-shift]] | confused_pink「咦？這是車還是霧？」 |
-| 3 | 基礎 | 物件偵測：有什麼、在哪裡 | 把每台車、每個人框起來並寫上名字 | [[object-detection]] | — |
-| 4 | 問題 | 換了環境，分數就掉 | 晴天訓練考霧天 29.5；用霧天答案重訓 48.7（DSOD, Table 1, p.8） | [[domain-shift]] · [[benchmarks]] | — |
-| 5 | 問題 | 舊資料拿不到了 | 隱私、成本 → 只剩舊模型＋沒答案的新照片；轉學生比喻 | [[source-free-adaptation]] | — |
-| 6 | 基本做法 | 自己出題、自己練習 | 老師出參考答案、學生練習、老師吸收進步；風險：猜錯也當正解 | [[mean-teacher]] · [[pseudo-label]] | — |
-| 7 | 問題 | 最大的麻煩：來源偏差 | 搬到台北還用老家路名找路 | [[source-bias]] | bored_yellow「我以前都這樣認的啊」 |
-| 8 | 地圖 | 研究者的三條路 | 請通才幫忙／認出沒見過的／邊用邊學；延伸：分類 | [[sfod-method-families]] | — |
-| 9 | 方法 1 | DSOD：請見多識廣的顧問坐副駕 | DINOv2 意見加進來但不能太多；29.5 → 48.1 | [[dsod-2026]] | — |
-| 10 | 方法 1 | FALCON：把目光拉回物體上 | OV-SAM 塗出物體；冷門類別進步最多 | [[falcon-sfod-2026]] · [[attention-map]] | — |
-| 11 | 比較 | 比進步，不比分數 | DSOD +18.6、FALCON +21.7；起點不同 | [[results-comparison]] | smug_purple「起點不同，要看進步多少！」 |
-| 12 | 方法 2 | SFUOD：沒見過的也要框出來 | 標成「不認識」；6.0% → 10.6%，約十個找到一個 | [[sfuod-2025]] · [[open-set-detection]] | — |
-| 13 | 方法 3 | 另一條路：邊用邊學 | 考前自習 vs 考場上調整 | [[test-time-adaptation]] | — |
-| 14 | 方法 3 | TTAOD-F：會看文字的偵測員 | 便條紙＋筆記本；44.8 → 56.2；慢約 3 倍 | [[ttaod-f-2025]] · [[prompt-tuning]] | struggle_blue「變準了，但每張圖慢了約 3 倍！」 |
-| 15 | 方法 3 | VLOD-TTA：相信成群的意見 | 成群框可信；26.2 vs 26.0、3.8 vs 11.4 GB | [[vlod-tta-2026]] · [[candidate-box-iou]] | — |
-| 16 | 延伸 | 延伸：分類也在解同一題 | CGA：「看起來像公車的卡車」 | [[cga-2026]] · [[class-confusion]] | — |
-| 17 | 限制 | 還沒解決的事 | 未知只找回 1/10；仍比直接用慢；小物體難；數字要驗算 | [[sfuod-2025]] · [[vlod-tta-2026]] · [[dsod-2026]] | dizzy_yellow「論文的數字也要自己驗算！」 |
-| 18 | 回顧 | 小測驗 | 3 題點擊看答案 | [[glossary]] | — |
+| # | 段落 | 標題 | 對應 wiki | 吉祥物提醒 |
+|---|---|---|---|---|
+| 1 | 引入 | 換了環境，AI 還認得出來嗎？ | [[index]] | —（幾何圖形） |
+| 2 | 引入 | 新手駕駛的霧夜 | [[domain-shift]] | confused_pink「咦？這是車還是霧？」 |
+| 3 | 基礎 | 物件偵測：有什麼、在哪裡 | [[object-detection]] | — |
+| 4 | 問題 | 換了環境，分數就掉 | [[domain-shift]] · [[benchmarks]] | — |
+| 5 | 問題 | 舊資料拿不到了 | [[source-free-adaptation]] | — |
+| 6 | 基本做法 | 自己出題、自己練習（箭頭：把知識傳給學生／吸收學生進步） | [[mean-teacher]] · [[pseudo-label]] | — |
+| 7 | 問題 | 來源偏差：和領域落差差在哪？ | [[source-bias]] | bored_yellow「接下來的方法，都在幫我放下舊習慣！」 |
+| 8 | 地圖 | 研究者的三條路 | [[sfod-method-families]] | — |
+| 9 | 路線 1 | DSOD 概要 | [[dsod-2026]] | — |
+| 10 | 路線 1 | DSOD 架構與設計討論 | [[dsod-2026]] | — |
+| 11 | 路線 1 | FALCON 概要 | [[falcon-sfod-2026]] | determined_red「常見的汽車、行人幾乎沒變，難的反而進步最多！」 |
+| 12 | 路線 1 | FALCON 架構與設計討論 | [[falcon-sfod-2026]] · [[attention-map]] | — |
+| 13 | 比較 | 比進步，不比分數 | [[results-comparison]] | — |
+| 14 | 路線 2 | SFUOD 概要 | [[sfuod-2025]] | confused_pink「我只學過車，行人、腳踏車對我都是『不認識』！」 |
+| 15 | 路線 2 | SFUOD 架構與設計討論 | [[collaborative-tuning-paul]] | — |
+| 16 | 路線 3 | 另一條路：邊用邊學 | [[test-time-adaptation]] | — |
+| 17 | 路線 3 | TTAOD-F 概要 | [[ttaod-f-2025]] | struggle_blue「上線即時用的系統，速度也是成績的一部分。」 |
+| 18 | 路線 3 | TTAOD-F 架構與設計討論 | [[ttaod-f-2025]] · [[prompt-tuning]] | — |
+| 19 | 路線 3 | VLOD-TTA 概要 | [[vlod-tta-2026]] | — |
+| 20 | 路線 3 | VLOD-TTA 架構與設計討論 | [[vlod-tta-2026]] · [[entropy-minimization]] | — |
+| 21 | 延伸 | 把「容易搞混」的點子帶回偵測（CGA；發想 X1 騎士↔行人、X6） | [[ideas]] · [[cga-ideas-for-detection]] | guide_blue「你還想得到哪些『長得很像』的東西？」 |
+| 22 | 延伸 | 還可以怎麼做？三個有根據的發想（X2 遮罩×小物體、X3 免重新訓練、X5 放大解析度） | [[ideas]] | — |
+| 23 | 總結 | 這個領域：做到了什麼、還差什麼 | [[results-comparison]] | — |
+| 24 | 回顧 | 小測驗（4 題） | [[glossary]] | — |
 
-## 數字使用決策（來自 wiki「矛盾」段）
-- DSOD 晴→霧用表格 48.1，不與 Oracle 比較；講者備註註明該列各類平均為 46.4。
-- TTAOD-F 延遲：第 14 頁用 TTAOD-F 自己量的 213.1 → 693.8 ms；第 15 頁只比記憶體與準確度（VLOD-TTA 量測），不混用延遲數字。
-- 不放 Cityscapes 張數。
+## 數字使用決策
+- DSOD 晴→霧用表格 48.1，不與 Oracle 比較；講者備註註明各類平均 46.4。
+- TTAOD-F 延遲用 TTAOD-F 自己量的數字；VLOD-TTA 比較只用其 Table 5。
+- 論文數字錯誤只記在 wiki，不上簡報（使用者決策）。
 
-## 吉祥物規則（2026-11-22 使用者決策）
-- 只在重點提醒頁出現（第 2、7、11、14、17 頁），搭配對話泡泡；約每 3～4 頁一個。
+## v3（2026-11-22）
+- 依 SYNTHESIZE 產出 `wiki/comparisons/ideas.md`：第 21 頁換成最有根據的發想（騎士被推成行人 × CGA 有方向的混淆），新增第 22 頁。

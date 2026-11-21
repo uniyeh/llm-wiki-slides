@@ -54,3 +54,4 @@ updated: 2026-11-21
 | 轉接器（Adapter） | 插在大模型裡的小轉接頭，只調它 | [[adapter]] |
 | YOLO-World | CNN 架構、速度快的圖文偵測器 | [[vision-language-detector]] |
 | SFOD 方法家族 | 各派解法的分類總覽 | [[sfod-method-families]] |
+| 免梯度調整（Gradient-free） | 不做反向傳播就能調整，速度更快 | [[ideas]] |

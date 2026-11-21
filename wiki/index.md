@@ -48,6 +48,8 @@ updated: 2026-11-21
 ## Comparisons（比較）
 - [[method-comparison]] — 各論文方法並列
 - [[results-comparison]] — 各論文結果與進步幅度
+- [[ideas]] — （SYNTHESIZE）延伸發想總表：作者未來方向、交叉發想、共同盲點、建議加讀論文
+- [[cga-ideas-for-detection]] — （發想）把 CGA 的混淆提示帶回偵測
 
 ## Datasets & Metrics
 - [[benchmarks]] — Cityscapes / Foggy / BDD100k / Sim10k / KITTI、mAP

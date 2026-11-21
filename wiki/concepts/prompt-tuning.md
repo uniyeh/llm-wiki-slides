@@ -21,5 +21,12 @@ updated: 2026-11-21
 - VLOD-TTA 每類 16 句 GPT 提示，依本圖相容度保留前 25%；比全部平均好（+1.0 vs 部分下降）。（VLOD-TTA, p.6–8, Fig. 5a）
 - 另一種參數高效方式：[[adapter]]。
 
+## 和[[adapter|轉接器]]有什麼不同？
+| | 提示調整 | 轉接器 |
+|---|---|---|
+| 調哪裡 | 輸入端加幾個可學向量（文字或影像 token）（TTAOD-F, p.4） | 模型「層與層之間」插小模組（VLOD-TTA, p.7） |
+| 共同點 | 大模型凍結、只調少量參數 | 同左 |
+| 本 wiki 例子 | TTAOD-F、CGA | VLOD-TTA（約 0.89M 參數，Table 5, p.11） |
+
 ## 相關
 [[vision-language-detector]] · [[vision-language-model]] · [[ttaod-f-2025]]

@@ -64,3 +64,26 @@
 
 ## [2026-11-22] build | 吉祥物改為重點提醒
 - 使用者決策：吉祥物只用於重點提醒（對話泡泡），約每 3～4 頁一個；保留 2、7，新增 11、14、17；其餘移除；AGENTS.md 第 6 節已更新
+
+## [2026-11-22] lint | 使用者回饋後補 wiki
+- 修正 ttaod-f-2025 消融順序（影像＋Warm-start 53.4 → 加文字 53.9 → 加 MH 54.9 → 全部 56.2；ME 單獨 46.1）
+- source-bias 新增「和領域落差有什麼不同」對照表
+- 新增 comparisons/cga-ideas-for-detection.md（發想頁，標明非論文結論）
+
+## [2026-11-22] outline+build+review | 簡報 v2（23 頁）
+- 方法各加「架構與設計討論」頁；第 6、7、21、22 頁改寫；吉祥物 6 隻（2、7、11、14、17、21）且不複述內文；小測驗 4 題
+
+## [2026-11-22] ingest（補段落）| 6 篇 sources
+- 依新規則補「設計決策與消融證據」「作者提到的限制與未來方向」兩段
+- 新發現：VLOD-TTA 失敗分析（rider↔person 混淆、解析度 640→1024）
+
+## [2026-11-22] synthesize | comparisons/ideas.md
+- ① 作者未來方向 6 條、② 交叉發想 6 條（X1 混淆提示 × 騎士被推成行人 最有根據）、③ 共同盲點 4 條、④ 建議加讀論文 8 組
+
+## [2026-11-22] init | AGENTS.md 加入 SYNTHESIZE 節點、使用者回饋→規則（非阻塞）、REVIEW 模擬讀者、sources 新段落規則；新增 tools/lint.py
+
+## [2026-11-22] lint | 相近概念對照段
+- 新增「和 X 有什麼不同」：prompt-tuning↔adapter、vision-language-model↔vision-foundation-model↔vision-language-detector、mean-teacher↔knowledge-distillation、class-confusion↔class-imbalance（source-bias↔domain-shift 已有）
+
+## [2026-11-22] outline+build+review | 簡報 v3（24 頁）
+- 第 21 頁改用 ideas.md X1、新增第 22 頁（X2、X3、X5）；模擬讀者檢查修 5 處；3 輪通過

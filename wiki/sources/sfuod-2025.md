@@ -5,7 +5,7 @@ tags: [sfod, open-set, unknown-detection, mean-teacher, deformable-detr]
 sources: [sfuod-2025]
 raw: raw/SFUOD_Source-Free_Unknown_Object_Detection_ICCV2025_[AW].pdf
 venue: ICCV 2025
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 # SFUOD / CollaPAUL（ICCV 2025）
 
@@ -50,6 +50,17 @@ updated: 2026-11-21
 - 絕對分數仍低：未知物體約只找回 1/10（U-Recall 10.59）。（Table 1, p.6）
 - 城市→BDD 的單一類別不是全部最佳：Car 不如 Mean Teacher（57.95 vs 59.68）、Bus 不如 SF-UT（9.40 vs 15.21）；三個總指標才是最佳。（Table 2, p.6）
 - 所有未知類別合併成單一「unknown」，不分辨是什麼。（SFUOD, p.3）
+
+## 設計決策與消融證據
+| 設計 | 為什麼 | 證據 |
+|---|---|---|
+| 協作調整（輔助目標編碼器＋cross-domain attention） | 來源知識造成已知／未知混淆，需要不依賴來源的目標知識 | Known mAP 22.97 → 30.63（Table 3, p.7）；cross-domain 15.95 > prefix-tuning 12.57（H，Table 6, p.7） |
+| 協作層插 3 層 | 從早期層插入以穩定傳遞 | L=3 最佳，L=4、5 下降（Table 4, p.7） |
+| PAUL 主軸投影 | 老師沒學過未知，信心低；但未知與已知共享「物體性」 | U-Recall：只用信心 3.56、注意力 4.00、PAUL 10.59（Table 7, p.7） |
+
+## 作者提到的限制與未來方向
+- 「SFUOD 仍有改進空間」；期望為開放集合的領域自適應偵測提供新方向。（p.8）
+- 相關方法無法直接套用：OpenDet 需監督學習、OW-DETR 需單一領域持續學習、SOMA 需來源資料。（p.11）
 
 ## 矛盾
 - **Cityscapes 訓練張數**：SFUOD 寫 2,975 訓練／500 驗證、共 3,475（p.6）；[[dsod-2026]]（p.7）與 [[falcon-sfod-2026]]（p.5）寫 2,925。

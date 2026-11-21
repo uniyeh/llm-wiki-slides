@@ -16,5 +16,8 @@ updated: 2026-11-21
 - 後果：產生錯誤[[pseudo-label|偽標籤]]，也扭曲特徵空間；在細粒度分類特別嚴重。（CGA, p.2）
 - CGA 用混淆矩陣找出有向混淆對，再針對性處理。（CGA, p.4）
 
+## 和[[class-imbalance|類別不平衡]]有什麼不同？
+- 不平衡是「某類樣本太少」（FALCON, Table 8, p.8）；混淆是「兩類長得像而互相認錯」，且有方向（CGA, p.2）。兩者可能同時發生：卡車、公車既少見又容易互相混淆。
+
 ## 相關
-[[cga-2026]] · [[class-imbalance]]
+[[cga-2026]] · [[class-imbalance]] · [[cga-ideas-for-detection]]

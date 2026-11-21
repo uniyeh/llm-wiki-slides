@@ -6,7 +6,7 @@ sources: [vlod-tta-2026]
 raw: raw/VLOD-TTA_Test-Time_Adaptation_Vision-Language_Object_Detectors_ECCV2026.pdf
 venue: ECCV 2026（依檔名）
 slide-role: 正式內容「另一條路：邊用邊學（TTA）」1 頁（使用者決策 2026-11-21）
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 # VLOD-TTA（ECCV 2026）
 
@@ -64,6 +64,23 @@ updated: 2026-11-21
 - 行車場景進步小（YW 平均 +1.0 mAP、GD +1.6）：小物體多、候選框重疊少，IWE 較難發揮。（p.9）
 - YW 上 Adapter 基線在 BDD100K 反而低於 Zero-shot（AP50 21.7 vs 22.0）。（Table 1, p.9）
 - 與 TTAOD-F 比較時 batch size 不同（4 vs 1）；作者註明 TTAOD-F 改用 1 時效能下降。（p.11 註腳）
+
+## 設計決策與消融證據
+| 設計 | 為什麼 | 證據 |
+|---|---|---|
+| 不用老師、改熵最小化 | 老師需第二個偵測器與額外前向傳遞 | 記憶體 3.76 vs 11.37 GB（Table 5, p.11） |
+| IWE 依重疊群加權 | 一般熵把孤立框也拉高信心（確認偏誤） | Adapter 28.3 → IWE 29.3（Watercolor mAP，Table 3, p.11） |
+| IPS 挑選而非平均 | 平均會稀釋相關提示 | 平均 −0.35／−0.30；挑選平均 +1.0 AP50（Fig. 5a, p.13） |
+| Adapter 而非 BN | BN 需逐資料集調學習率，未知環境不實際 | （Table 4, p.10–11） |
+| 單張一步、用完重置 | 單張圖的參數不預期能泛化到其他圖 | （p.7） |
+
+## 作者提到的限制與未來方向
+- IWE 在「小物體多、候選框重疊少」的場景（如 Cityscapes）效果較弱。（p.15）
+- 仍比 zero-shot 慢（測試時要反向傳播）；**未來方向：免梯度（gradient-free）的 VLOD 測試時調整**。（p.15）
+- 失敗分析（補充材料）：
+  - **rider 與 person 標籤重疊**：零樣本模型偏向 person，IWE 會把模稜兩可的騎士進一步推向 person；Cityscapes 上 person AP 17.8 → 16.5、rider 6.3 → 1.9。把 rider 併入 person 後，VLOD-TTA 反而進步（person 23.2 → 24.4）。（Table 12–13, p.22–23）
+  - **小物體與解析度**：YOLO-World 預設縮到 640×640，遠處小物體不易形成穩定重疊框；改 1024×1024 後 ZS 28.5 → VLOD-TTA 31.2 mAP（640 時僅 18.8 → 19.4）。（Table 14, p.23）
+- 在水下等罕見類別領域，CLIP 式提示反而變差，IPS 仍有進步。（p.24）
 
 ## 矛盾
 - **TTAOD-F 延遲**：TTAOD-F 自己量 693.8 ms（TTAOD-F, Table 9, p.14）；本篇量 701.9 ms（Table 5, p.11）。直接用：213.1 vs 210.6 ms。屬不同量測，簡報標明出處。
