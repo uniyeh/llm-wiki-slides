@@ -1,0 +1,63 @@
+# Log
+
+## [2026-11-21] init | 專案建立
+- 建立 raw/ wiki/{sources,concepts} asset/ slides/ 與 AGENTS.md
+- asset/ 下載 Kenney Shape Characters（CC0），組合 10 個幾何角色 char_*.png
+
+## [2026-11-21] ingest | dsod-2026
+- 新增 sources/dsod-2026.md
+- 新增 concepts/: object-detection, detr, domain-shift, source-free-adaptation, mean-teacher, pseudo-label, source-bias, vision-foundation-model, knowledge-distillation, benchmarks, sfod-method-families
+- 標註矛盾：摘要 39.3 vs Table 2 39.2（cross-scene）
+
+## [2026-11-21] init | 更新 AGENTS.md
+- 新增頁面類型 comparison、glossary；出處加圖表號；ingest 一次一篇
+- 新增 wiki/glossary.md
+
+## [2026-11-21] lint | dsod-2026 數字驗算
+- 自算 Table 1/2 各類別平均：DSOD 列與 mAP 欄不符（48.1 vs 46.4；39.2 vs 38.5），其他方法列一致
+- 使用者決策：無法確認時以表格 mAP 欄為準；移除「幾乎追上 Oracle」說法
+
+## [2026-11-21] ingest | falcon-sfod-2026
+- 新增 sources/falcon-sfod-2026.md；concepts/: attention-map, segmentation-model, class-imbalance, extreme-domain-shift
+- 新增 comparisons/: method-comparison, results-comparison
+- 更新：vision-foundation-model, sfod-method-families, pseudo-label, mean-teacher, benchmarks, glossary
+- 驗算：Table 1/2 各類別平均與 mAP 一致；矛盾：內文贏 SF-YOLO 4.9 vs 表格 4.4；Clipart 35.5 vs 自算 35.35
+
+## [2026-11-21] ingest | sfuod-2025
+- 新增 sources/sfuod-2025.md；concepts/: open-set-detection, recall-and-h-score, collaborative-tuning-paul
+- 更新：benchmarks, source-free-adaptation, mean-teacher, pseudo-label, sfod-method-families, method-comparison, results-comparison, glossary
+- 驗算：Known mAP、H-Score 與表格一致
+- 矛盾：Cityscapes 訓練張數 2,975（SFUOD）vs 2,925（DSOD、FALCON）→ 使用者判定 SFUOD 寫錯
+
+## [2026-11-21] ingest | cga-2026
+- 新增 sources/cga-2026.md；concepts/: class-confusion, vision-language-model, image-classification
+- 更新：vision-foundation-model, source-free-adaptation, pseudo-label, sfod-method-families, method-comparison, results-comparison, glossary
+- 驗算：四表 Avg 與自算一致；矛盾：VisDA 最佳類別 8（內文）vs 6（表格）、車輛類 +3.9% 無法重現
+- 使用者決策：CGA 為分類論文，簡報只用 1 頁延伸補充
+
+## [2026-11-21] ingest | ttaod-f-2025
+- 新增 sources/ttaod-f-2025.md；concepts/: test-time-adaptation, vision-language-detector, prompt-tuning
+- 更新：benchmarks, source-free-adaptation, vision-language-model, vision-foundation-model, mean-teacher, pseudo-label, sfod-method-families, method-comparison, results-comparison, glossary
+- 驗算：Pascal-C、COCO-C 平均一致；COCO-C 8/15 最佳一致；無矛盾
+- 使用者決策：TTA 兩篇放正式內容「另一條路：邊用邊學」，各 1 頁
+
+## [2026-11-21] ingest | vlod-tta-2026
+- 新增 sources/vlod-tta-2026.md；concepts/: candidate-box-iou, entropy-minimization, adapter
+- 更新：ttaod-f-2025, sfuod-2025（關係段落）, test-time-adaptation, vision-language-detector, benchmarks, prompt-tuning, vision-foundation-model, sfod-method-families, method-comparison, results-comparison, glossary
+- 驗算：PASCAL-C 平均、COCO-C 分組加權平均一致；矛盾：TTAOD-F 延遲 693.8 vs 701.9；YW 風格 AP50 +5.8（內文）vs +5.7（表格）
+
+## [2026-11-21] lint | 全 wiki（6 篇 ingest 完成後）
+- 斷鏈 0、孤兒頁 0、缺 frontmatter 0、缺白話版 0、glossary 未收 0、index 未收 0
+- 修正：results-comparison「同上」改為明確出處；benchmarks Foggy 0.02、recall 10.59、ttaod-f m=10、falcon Source only 補出處；glossary 加入連入與 sfod-method-families
+- 接受（非事實缺出處）：日期、資料集名稱含數字、白話段落、表格以表頭／表下方統一標出處的列
+- 矛盾已標記：dsod（2 處，使用者決策）、falcon（2）、sfuod（2，使用者決策 1）、cga（2）、vlod-tta（2）；ttaod-f 無
+- 頁數：sources 6、concepts 27、comparisons 2、glossary 1
+
+## [2026-11-21] outline | slides/outline.md
+- 18 頁；三條路（請通才幫忙／認出沒見過的／邊用邊學）＋CGA 延伸 1 頁
+
+## [2026-11-21] build | slides/index.html
+- 單一 HTML、無外部 CDN；角色圖取自 ../asset/
+
+## [2026-11-21] review | slides/review.md
+- 第 1 輪：版面置中、3 頁字數超標 → 修正；第 2 輪：#頁碼跳頁 bug、第 12 頁備註精確度 → 修正；第 3 輪通過

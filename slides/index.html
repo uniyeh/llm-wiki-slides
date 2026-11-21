@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>換了環境，AI 還認得出來嗎？｜SF-DAOD 入門</title>
+<style>
+:root{
+  --bg:#FBF5EC; --ink:#2B2D42; --muted:#6B6E80; --line:#E7DCCB;
+  --blue:#4F7CE8; --purple:#9061E6; --pink:#F27BB5; --red:#E24C4C; --yellow:#F5A623; --green:#3DBE6E;
+  --blue-l:#E3EBFD; --purple-l:#EFE6FD; --pink-l:#FDE6F1; --red-l:#FCE3E3; --yellow-l:#FEF0D6; --green-l:#DFF5E8;
+  --font:"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#2B2D42;overflow:hidden;font-family:var(--font);color:var(--ink)}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1280px;height:720px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--bg);border-radius:6px;overflow:hidden;
+  padding:56px 72px 64px;display:none;flex-direction:column}
+.slide.active{display:flex;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* geometric decor */
+.deco{position:absolute;pointer-events:none;z-index:0}
+.c{border-radius:50%}
+.sq{border-radius:18px}
+.dia{transform:rotate(45deg);border-radius:14px}
+.tri{width:0!important;height:0!important;background:none!important;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:104px solid}
+.slide > *:not(.deco){position:relative;z-index:1}
+
+/* header */
+.kicker{display:inline-block;font-size:18px;font-weight:700;letter-spacing:.08em;color:#fff;
+  padding:6px 16px;border-radius:999px;margin-bottom:14px;align-self:flex-start}
+h1{font-size:48px;line-height:1.2;font-weight:900;letter-spacing:.01em}
+h2{font-size:42px;line-height:1.25;font-weight:900;margin-bottom:26px}
+.lead{font-size:28px;line-height:1.65;max-width:760px}
+.lead b{background:linear-gradient(transparent 60%,var(--yellow-l) 60%);font-weight:800}
+.small{font-size:20px;color:var(--muted);line-height:1.6}
+
+/* footer */
+.foot{position:absolute!important;left:72px;right:72px;bottom:20px;display:flex;justify-content:space-between;
+  align-items:center;font-size:15px;color:var(--muted)}
+.foot .src::before{content:"出處｜";font-weight:700}
+
+/* characters */
+.char{position:absolute!important;bottom:56px;right:64px;width:200px;filter:drop-shadow(0 6px 0 rgba(0,0,0,.06))}
+.char.sm{width:150px}
+.bubble{position:absolute!important;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:14px 20px;
+  font-size:22px;font-weight:700;line-height:1.45;max-width:300px}
+.bubble::after{content:"";position:absolute;bottom:-16px;right:48px;border:10px solid transparent;border-top:14px solid var(--ink)}
+
+/* blocks */
+.row{display:flex;gap:24px;align-items:stretch}
+.card{border-radius:22px;padding:22px 24px;border:3px solid;background:#fff;flex:1}
+.card h3{font-size:26px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.card p{font-size:21px;line-height:1.6}
+.num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;color:#fff;font-size:22px;font-weight:900;flex:none}
+ul.pts{list-style:none;display:flex;flex-direction:column;gap:14px;max-width:780px}
+ul.pts li{font-size:25px;line-height:1.5;padding-left:40px;position:relative}
+ul.pts li::before{content:"";position:absolute;left:4px;top:11px;width:18px;height:18px;border-radius:5px;background:var(--c,var(--blue));transform:rotate(45deg)}
+.stat{display:flex;align-items:baseline;gap:14px}
+.stat .big{font-size:64px;font-weight:900;line-height:1}
+.stat .unit{font-size:20px;color:var(--muted)}
+.arrow{font-size:40px;font-weight:900;color:var(--muted)}
+.tag{display:inline-block;font-size:16px;font-weight:700;padding:3px 10px;border-radius:8px;color:#fff;margin-right:6px}
+.note{font-size:15px;color:var(--muted);margin-top:8px}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:18px;width:720px}
+.bar{display:flex;align-items:center;gap:14px}
+.bar .lab{width:230px;font-size:20px;font-weight:700;text-align:right;line-height:1.3}
+.bar .track{flex:1;height:46px;background:#fff;border:2px solid var(--line);border-radius:12px;position:relative;overflow:hidden}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px 0 0 10px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:#fff;font-weight:900;font-size:22px}
+.bar .gain{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding-left:10px;font-weight:900;font-size:22px}
+
+/* scene (object detection mock) */
+.scene{width:640px;height:340px;border-radius:22px;background:linear-gradient(#CFE3FA 0 55%,#9AA3B5 55% 100%);position:relative;overflow:hidden;border:3px solid var(--ink)}
+.scene .road{position:absolute;left:0;right:0;bottom:0;height:45%;background:#7E869A}
+.scene .lane{position:absolute;bottom:70px;height:8px;width:70px;background:#fff;border-radius:4px}
+.obj{position:absolute;border-radius:12px}
+.box{position:absolute;border:4px solid;border-radius:6px}
+.box span{position:absolute;top:-30px;left:-4px;color:#fff;font-size:16px;font-weight:800;padding:2px 8px;border-radius:6px 6px 6px 0;white-space:nowrap}
+
+/* quiz */
+.q{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:16px 22px;cursor:pointer;margin-bottom:14px;max-width:860px;transition:background .2s}
+.q:hover{background:#FFFDF8}
+.q .qq{font-size:23px;font-weight:800}
+.q .qa{font-size:21px;line-height:1.55;margin-top:8px;display:none;color:#1F6E43}
+.q.open .qa{display:block}
+.q .hint{font-size:15px;color:var(--muted);font-weight:600;margin-left:8px}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:70px;margin-top:-10px}
+.lead{font-size:30px!important}
+ul.pts li{font-size:29px}
+.card p{font-size:23px}
+.card h3{font-size:28px}
+/* nav chrome */
+#progress{position:fixed;left:0;bottom:0;height:5px;background:var(--yellow);transition:width .3s;z-index:10}
+#pageno{position:fixed;right:16px;bottom:12px;color:#fff;font:700 14px var(--font);opacity:.75;z-index:10}
+#help{position:fixed;left:16px;bottom:12px;color:#fff;font:500 13px var(--font);opacity:.55;z-index:10}
+#notes{position:fixed;left:50%;transform:translateX(-50%);bottom:30px;width:min(900px,92vw);background:#fff;color:var(--ink);
+  border-radius:14px;padding:16px 20px;font-size:16px;line-height:1.6;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none;z-index:20}
+#notes.show{display:block}
+#notes b{color:var(--purple)}
+aside.notes{display:none!important}
+@media print{
+  html,body{background:#fff;overflow:visible}
+  #viewport{position:static;display:block}
+  #stage{transform:none!important;width:1280px;height:auto}
+  .slide{display:flex!important;position:relative;height:720px;page-break-after:always;animation:none}
+  #progress,#pageno,#help,#notes{display:none!important}
+}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- 1 封面 -->
+<section class="slide" style="background:var(--bg)">
+  <div class="deco c" style="width:420px;height:420px;background:var(--yellow-l);right:-90px;top:-120px"></div>
+  <div class="deco sq" style="width:150px;height:150px;background:var(--blue);opacity:.9;left:-40px;bottom:120px;transform:rotate(12deg)"></div>
+  <div class="deco dia" style="width:70px;height:70px;background:var(--pink);left:560px;top:70px"></div>
+  <div class="deco c" style="width:46px;height:46px;background:var(--green);left:640px;top:430px"></div>
+  <span class="kicker" style="background:var(--purple);margin-top:70px">AI 入門｜6 篇論文整理</span>
+  <h1 style="font-size:66px;max-width:780px">換了環境，<br>AI 還認得出來嗎？</h1>
+  <p class="lead" style="margin-top:22px">無來源領域自適應物件偵測<br><span class="small">Source-Free Domain Adaptive Object Detection（SF-DAOD）</span></p>
+  <img class="char" src="../asset/char_guide_blue.png" alt="主講角色" style="right:250px;bottom:110px;width:190px">
+  <img class="char sm" src="../asset/char_source_green.png" alt="" style="right:80px;bottom:200px">
+  <img class="char sm" src="../asset/char_struggle_blue.png" alt="" style="right:110px;bottom:40px;width:130px">
+  <div class="foot"><span class="src">本專案 LLM Wiki（wiki/index.md），整理自 6 篇論文</span><span>← → 或空白鍵翻頁｜N 顯示講者備註</span></div>
+  <aside class="notes">開場：今天用 18 頁講一件事——AI 換到沒看過的環境時，在拿不到原本訓練資料的情況下，怎麼自己適應。內容全部來自 wiki，數字都附出處。</aside>
+</section>
+
+<!-- 2 生活情境 -->
+<section class="slide">
+  <div class="deco c" style="width:300px;height:300px;background:var(--blue-l);left:-80px;bottom:-90px"></div>
+  <div class="deco dia" style="width:60px;height:60px;background:var(--yellow);right:330px;top:60px"></div>
+  <span class="kicker" style="background:var(--pink)">先想像一下</span>
+  <h2>新手駕駛的霧夜</h2>
+  <div class="body">
+  <div class="row" style="max-width:820px;margin-bottom:28px">
+    <div class="card" style="border-color:var(--yellow);background:var(--yellow-l)"><h3>☀️ 練車時</h3><p>晴天、白天、路標清楚</p></div>
+    <div class="card" style="border-color:var(--blue);background:#DDE3EE"><h3>🌫️ 第一次上路</h3><p>濃霧、夜晚、看不清楚</p></div>
+  </div>
+  <p class="lead">只在晴天練過車的新手，第一次在霧夜上路，<b>路標、行人都認不太出來</b>。AI 也會這樣。</p>
+  </div>
+  <img class="char" src="../asset/char_confused_pink.png" alt="疑惑角色">
+  <div class="bubble" style="right:80px;bottom:270px">咦？這是車<br>還是霧？</div>
+  <div class="foot"><span class="src">wiki/concepts/domain-shift.md（白話版）</span><span></span></div>
+  <aside class="notes">用生活經驗引入「領域落差」。比喻出自 wiki 的 domain-shift 白話版。</aside>
+</section>
+
+<!-- 3 物件偵測 -->
+<section class="slide">
+  <div class="deco sq" style="width:120px;height:120px;background:var(--green-l);right:40px;top:40px;transform:rotate(-10deg)"></div>
+  <div class="deco c" style="width:60px;height:60px;background:var(--purple);left:40px;bottom:110px;opacity:.85"></div>
+  <span class="kicker" style="background:var(--blue)">基礎概念</span>
+  <h2>物件偵測：有什麼、在哪裡</h2>
+  <div class="body">
+  <div class="row" style="align-items:center;gap:40px">
+    <div class="scene">
+      <div class="road"></div>
+      <div class="lane" style="left:60px"></div><div class="lane" style="left:240px"></div><div class="lane" style="left:420px"></div>
+      <div class="obj" style="left:70px;top:150px;width:170px;height:80px;background:var(--red)"></div>
+      <div class="obj c" style="left:95px;top:212px;width:38px;height:38px;background:#2B2D42;border-radius:50%"></div>
+      <div class="obj c" style="left:180px;top:212px;width:38px;height:38px;background:#2B2D42;border-radius:50%"></div>
+      <div class="obj" style="left:360px;top:110px;width:46px;height:46px;background:var(--yellow);border-radius:50%"></div>
+      <div class="obj" style="left:352px;top:160px;width:62px;height:110px;background:var(--blue);border-radius:16px"></div>
+      <div class="obj" style="left:480px;top:70px;width:110px;height:170px;background:var(--green);border-radius:20px 20px 6px 6px"></div>
+      <div class="box" style="left:60px;top:140px;width:190px;height:120px;border-color:var(--red)"><span style="background:var(--red)">車 0.92</span></div>
+      <div class="box" style="left:342px;top:100px;width:82px;height:180px;border-color:var(--blue)"><span style="background:var(--blue)">人 0.88</span></div>
+      <div class="box" style="left:470px;top:60px;width:130px;height:190px;border-color:var(--green)"><span style="background:var(--green)">公車 0.81</span></div>
+    </div>
+    <div style="flex:1">
+      <p class="lead" style="font-size:26px">讓電腦看照片，<b>把每台車、每個人框起來</b>，再寫上名字和把握度。</p>
+    </div>
+  </div>
+  </div>
+  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色" style="bottom:50px;right:60px">
+  <div class="foot"><span class="src">wiki/concepts/object-detection.md；DSOD, p.2</span><span></span></div>
+  <aside class="notes">框旁的數字是模型的「信心分數」。偵測比分類多了「在哪裡」和「有幾個」。示意圖為自繪，不是論文圖。</aside>
+</section>
+
+<!-- 4 分數下滑 -->
+<section class="slide">
+  <div class="deco c" style="width:260px;height:260px;background:var(--red-l);right:-60px;top:-60px"></div>
+  <div class="deco tri" style="border-bottom-color:var(--yellow);left:960px;bottom:300px;opacity:.8"></div>
+  <span class="kicker" style="background:var(--red)">問題</span>
+  <h2>換了環境，分數就掉</h2>
+  <div class="body">
+  <div class="bars" style="margin:10px 0 30px">
+    <div class="bar"><div class="lab">晴天訓練<br>→ 考霧天</div><div class="track"><div class="fill" style="width:29.5%;background:var(--red)">29.5</div></div></div>
+    <div class="bar"><div class="lab">用霧天答案重訓<br>（理論上限）</div><div class="track"><div class="fill" style="width:48.7%;background:var(--green)">48.7</div></div></div>
+  </div>
+  <p class="lead" style="font-size:25px">訓練的世界（<b>來源</b>）和使用的世界（<b>目標</b>）不一樣，就叫<b>領域落差</b>。</p>
+  <p class="note">分數為 mAP（0–100，越高越好）</p>
+  </div>
+  <img class="char" src="../asset/char_struggle_blue.png" alt="卡關角色" style="width:180px">
+  <div class="foot"><span class="src">DSOD, Table 1, p.8；wiki/concepts/domain-shift.md、benchmarks.md</span><span></span></div>
+  <aside class="notes">Cityscapes → Foggy Cityscapes。29.5 是 Source only，48.7 是 Oracle（用目標標註訓練），出自 DSOD Table 1。mAP 大致可理解成「框得準又認得對」的平均分。</aside>
+</section>
+
+<!-- 5 拿不到舊資料 -->
+<section class="slide">
+  <div class="deco sq" style="width:180px;height:180px;background:var(--purple-l);left:-50px;top:250px;transform:rotate(20deg)"></div>
+  <div class="deco c" style="width:50px;height:50px;background:var(--blue);right:300px;top:70px"></div>
+  <span class="kicker" style="background:var(--red)">更難的是</span>
+  <h2>舊資料拿不到了</h2>
+  <div class="body">
+  <ul class="pts" style="--c:var(--red)">
+    <li>隱私：醫療影像、生物特徵不能外流</li>
+    <li>儲存、運算成本太高</li>
+    <li>只剩<b>舊模型</b>＋<b>沒有答案的新照片</b></li>
+  </ul>
+  <div class="card" style="border-color:var(--purple);background:var(--purple-l);margin-top:26px;max-width:760px;flex:none">
+    <p style="font-size:23px"><b>🎒 像轉學生：</b>課本和老師都沒了，只剩前一間學校的筆記。</p>
+  </div>
+  </div>
+  <img class="char" src="../asset/char_sad_red.png" alt="沮喪角色" style="width:180px">
+  <div class="foot"><span class="src">DSOD, p.1；CGA, p.1；wiki/concepts/source-free-adaptation.md</span><span></span></div>
+  <aside class="notes">這就是「無來源」（Source-Free）：調整時只有在舊環境訓練好的模型，以及新環境沒有標註的資料。</aside>
+</section>
+
+<!-- 6 Mean Teacher -->
+<section class="slide">
+  <div class="deco dia" style="width:80px;height:80px;background:var(--green);right:380px;top:60px;opacity:.85"></div>
+  <div class="deco c" style="width:220px;height:220px;background:var(--green-l);left:-70px;bottom:-70px"></div>
+  <span class="kicker" style="background:var(--purple)">基本做法</span>
+  <h2>自己出題、自己練習</h2>
+  <div class="body">
+  <div class="row" style="align-items:center;gap:18px;max-width:900px">
+    <div class="card" style="border-color:var(--blue);background:var(--blue-l);flex:none;width:250px"><h3>🧑‍🏫 老師</h3><p>看清楚的照片<br>出「參考答案」</p></div>
+    <div class="arrow">→</div>
+    <div class="card" style="border-color:var(--pink);background:var(--pink-l);flex:none;width:250px"><h3>🧑‍🎓 學生</h3><p>看被弄亂的照片<br>照答案練習</p></div>
+    <div class="arrow">↺</div>
+    <div class="card" style="border-color:var(--green);background:var(--green-l);flex:none;width:250px"><h3>📈 老師</h3><p>慢慢吸收<br>學生的進步</p></div>
+  </div>
+  <div class="card" style="border-color:var(--red);background:var(--red-l);margin-top:28px;max-width:760px;flex:none">
+    <p style="font-size:23px"><b>⚠️ 風險：</b>猜錯的也被當成正解，越練越歪。</p>
+  </div>
+  </div>
+  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色">
+  <div class="foot"><span class="src">DSOD, p.1, p.3；wiki/concepts/mean-teacher.md、pseudo-label.md</span><span></span></div>
+  <aside class="notes">這叫 Mean Teacher；老師給的「參考答案」叫偽標籤（pseudo-label）。老師的權重是學生權重的移動平均（EMA）。目前多數 SFOD 方法都用這個框架（FALCON, p.1）。</aside>
+</section>
+
+<!-- 7 來源偏差 -->
+<section class="slide">
+  <div class="deco c" style="width:340px;height:340px;background:var(--yellow-l);right:-80px;bottom:-100px"></div>
+  <div class="deco sq" style="width:70px;height:70px;background:var(--pink);left:900px;top:70px;transform:rotate(15deg)"></div>
+  <span class="kicker" style="background:var(--yellow)">核心難題</span>
+  <h2>最大的麻煩：來源偏差</h2>
+  <div class="body">
+  <p class="lead">模型在學新環境，腦袋卻還用<b>舊環境的習慣</b>判斷——<br>像搬到台北，還用老家的路名找路。</p>
+  <p class="small" style="margin-top:24px;max-width:720px">只看得到新資料，更容易偏心。</p>
+  </div>
+  <img class="char" src="../asset/char_bored_yellow.png" alt="質疑角色">
+  <div class="bubble" style="right:90px;bottom:270px">我以前都<br>這樣認的啊</div>
+  <div class="foot"><span class="src">DSOD, p.1–2；wiki/concepts/source-bias.md</span><span></span></div>
+  <aside class="notes">Source Bias：調整後仍偏向來源領域，泛化差，並在自我訓練中累積錯誤。</aside>
+</section>
+
+<!-- 8 三條路 -->
+<section class="slide">
+  <div class="deco dia" style="width:90px;height:90px;background:var(--blue);right:90px;top:60px;opacity:.85"></div>
+  <span class="kicker" style="background:var(--blue)">地圖</span>
+  <h2>研究者的三條路</h2>
+  <div class="body">
+  <div class="row" style="max-width:1000px">
+    <div class="card" style="border-color:var(--green)"><h3><span class="num" style="background:var(--green)">1</span>請通才幫忙</h3><p>借用見多識廣的大模型</p><p class="note" style="font-size:17px">DSOD、FALCON</p></div>
+    <div class="card" style="border-color:var(--pink)"><h3><span class="num" style="background:var(--pink)">2</span>認出沒見過的</h3><p>沒學過的東西也要框出來</p><p class="note" style="font-size:17px">SFUOD</p></div>
+    <div class="card" style="border-color:var(--purple)"><h3><span class="num" style="background:var(--purple)">3</span>邊用邊學</h3><p>上線時才即時調整</p><p class="note" style="font-size:17px">TTAOD-F、VLOD-TTA</p></div>
+  </div>
+  <p class="small" style="margin-top:22px">＋延伸：圖片分類也在解同一題（CGA）</p>
+  </div>
+  <img class="char sm" src="../asset/char_guide_blue.png" alt="主講角色" style="bottom:50px">
+  <div class="foot"><span class="src">wiki/concepts/sfod-method-families.md</span><span></span></div>
+  <aside class="notes">接下來依序介紹三條路。分類是本 wiki 的整理，不是單一論文的說法。</aside>
+</section>
+
+<!-- 9 DSOD -->
+<section class="slide">
+  <div class="deco c" style="width:280px;height:280px;background:var(--green-l);right:-60px;top:-70px"></div>
+  <div class="deco sq" style="width:60px;height:60px;background:var(--yellow);left:40px;bottom:130px;transform:rotate(30deg)"></div>
+  <span class="kicker" style="background:var(--green)">路線 1｜DSOD</span>
+  <h2>請見多識廣的顧問坐副駕</h2>
+  <div class="body">
+  <p class="lead" style="font-size:25px">把看過大量圖片的通才模型（DINOv2）的看法加進來；<br>但<b>意見不能加太多</b>，否則預測會亂。</p>
+  <div class="row" style="align-items:center;gap:22px;margin-top:30px">
+    <div class="stat"><span class="big" style="color:var(--red)">29.5</span><span class="unit">晴天訓練直接考霧天</span></div>
+    <div class="arrow">→</div>
+    <div class="stat"><span class="big" style="color:var(--green)">48.1</span><span class="unit">加入顧問後＊</span></div>
+  </div>
+  <p class="note">＊依論文表格數值（mAP）</p>
+  </div>
+  <img class="char" src="../asset/char_source_green.png" alt="來源模型角色">
+  <div class="foot"><span class="src">DSOD, Table 1, p.8、Fig. 6, p.10；wiki/sources/dsod-2026.md</span><span></span></div>
+  <aside class="notes"><b>注意</b>：DSOD 表格中 48.1 這列，各類別分數自己平均只有 46.4，論文前後不一致；依使用者決策採表格 mAP 欄，且不拿來和 Oracle 比較。融合權重超過約 0.4 後 AP 急降（Fig. 6）。另有不需 DINOv2 的輕量蒸餾版 46.9。</aside>
+</section>
+
+<!-- 10 FALCON -->
+<section class="slide">
+  <div class="deco dia" style="width:110px;height:110px;background:var(--red-l);right:340px;top:40px"></div>
+  <div class="deco c" style="width:70px;height:70px;background:var(--blue);left:-20px;top:300px;opacity:.85"></div>
+  <span class="kicker" style="background:var(--green)">路線 1｜FALCON-SFOD</span>
+  <h2>把目光拉回物體上</h2>
+  <div class="body">
+  <p class="lead" style="font-size:25px">霧天時模型會東張西望。先請描輪廓高手（OV-SAM）<br>塗出「<b>哪裡是東西</b>」，訓練時要求模型看那裡。</p>
+  <p style="font-size:22px;font-weight:800;margin:26px 0 12px">冷門的東西進步最多：</p>
+  <div class="row" style="max-width:700px">
+    <div class="card" style="border-color:var(--red);text-align:center"><div style="font-size:22px">🚆 火車</div><div style="font-size:42px;font-weight:900;color:var(--red)">+4.1</div></div>
+    <div class="card" style="border-color:var(--yellow);text-align:center"><div style="font-size:22px">🚚 卡車</div><div style="font-size:42px;font-weight:900;color:var(--yellow)">+4.0</div></div>
+    <div class="card" style="border-color:var(--blue);text-align:center"><div style="font-size:22px">🚌 公車</div><div style="font-size:42px;font-weight:900;color:var(--blue)">+2.9</div></div>
+  </div>
+  </div>
+  <img class="char" src="../asset/char_determined_red.png" alt="專注角色" style="width:180px">
+  <div class="foot"><span class="src">FALCON, Fig. 1, p.2、Table 8, p.8；wiki/sources/falcon-sfod-2026.md</span><span></span></div>
+  <aside class="notes">遮罩在訓練前算一次，使用時不需要 OV-SAM，不會變慢。整體晴→霧從 45.0 → 46.9（Table 1, p.6）。汽車、行人幾乎沒變（−0.2、+0.1）。</aside>
+</section>
+
+<!-- 11 比進步 -->
+<section class="slide">
+  <div class="deco c" style="width:200px;height:200px;background:var(--purple-l);right:40px;top:40px"></div>
+  <span class="kicker" style="background:var(--purple)">怎麼比較</span>
+  <h2>比進步，不比分數</h2>
+  <div class="body">
+  <div class="bars" style="width:880px">
+    <div class="bar"><div class="lab">DSOD</div><div class="track"><div class="fill" style="width:29.5%;background:#B9BCC9">29.5</div><div class="gain" style="left:29.5%;width:18.6%;background:var(--green-l);color:var(--green)">+18.6</div></div></div>
+    <div class="bar"><div class="lab">FALCON</div><div class="track"><div class="fill" style="width:25.2%;background:#B9BCC9">25.2</div><div class="gain" style="left:25.2%;width:21.7%;background:var(--green-l);color:var(--green)">+21.7</div></div></div>
+  </div>
+  <p class="small" style="margin:10px 0 0 244px">灰色＝調整前的起點　綠色＝進步幅度（晴→霧，mAP）</p>
+  <p class="lead" style="font-size:24px;margin-top:26px">兩篇用的基礎模型不同，<b>起點就不一樣</b>，所以要看各自進步多少。</p>
+  </div>
+  <img class="char sm" src="../asset/char_smug_purple.png" alt="小技巧角色">
+  <div class="foot"><span class="src">DSOD, Table 1, p.8；FALCON, Table 1, p.6；wiki/comparisons/results-comparison.md</span><span></span></div>
+  <aside class="notes">兩篇 Source only 不同（29.5 vs 25.2），絕對分數不能直接比。DSOD 的 48.1 有表格不一致的疑慮（見第 9 頁備註）。</aside>
+</section>
+
+<!-- 12 SFUOD -->
+<section class="slide">
+  <div class="deco sq" style="width:160px;height:160px;background:var(--pink-l);right:-30px;top:60px;transform:rotate(-14deg)"></div>
+  <div class="deco dia" style="width:50px;height:50px;background:var(--green);left:60px;bottom:120px"></div>
+  <span class="kicker" style="background:var(--pink)">路線 2｜SFUOD</span>
+  <h2>沒見過的也要框出來</h2>
+  <div class="body">
+  <p class="lead" style="font-size:25px">路上突然出現模型沒學過的東西，至少要說：<br>「<b>這裡有個東西，我不認識</b>」。</p>
+  <div class="row" style="align-items:center;gap:22px;margin-top:30px">
+    <div class="stat"><span class="big" style="color:var(--muted)">6.0%</span><span class="unit">舊方法最好</span></div>
+    <div class="arrow">→</div>
+    <div class="stat"><span class="big" style="color:var(--pink)">10.6%</span><span class="unit">SFUOD</span></div>
+  </div>
+  <p class="small" style="margin-top:10px">未知物體找回率：進步了，但約<b>十個只找到一個</b>。</p>
+  </div>
+  <img class="char" src="../asset/char_confused_pink.png" alt="疑惑角色">
+  <div class="bubble" style="right:90px;bottom:270px">我不認識你，<br>但你在這裡！</div>
+  <div class="foot"><span class="src">SFUOD, p.1、Table 1, p.6；wiki/sources/sfuod-2025.md、open-set-detection.md</span><span></span></div>
+  <aside class="notes">實驗設定：模型只學過汽車、卡車、公車；行人、騎士、機車、火車、腳踏車當作「不認識」。晴→霧：已知類別 26.2 → 32.3；綜合分 8.9 → 16.0。反直覺：基本 Mean Teacher 在這個情境勝過進階方法。</aside>
+</section>
+
+<!-- 13 TTA -->
+<section class="slide">
+  <div class="deco c" style="width:260px;height:260px;background:var(--blue-l);left:-80px;top:-80px"></div>
+  <div class="deco tri" style="border-bottom-color:var(--purple);right:330px;top:70px;opacity:.7"></div>
+  <span class="kicker" style="background:var(--purple)">路線 3</span>
+  <h2>另一條路：邊用邊學</h2>
+  <div class="body">
+  <div class="row" style="max-width:900px">
+    <div class="card" style="border-color:var(--green);background:var(--green-l)"><h3>📚 前面的方法</h3><p><b>考前</b>拿考古題自習，<br>調好再上線</p></div>
+    <div class="card" style="border-color:var(--purple);background:var(--purple-l)"><h3>✍️ 邊用邊學（TTA）</h3><p><b>上考場</b>邊寫邊調整，<br>一張一張即時學</p></div>
+  </div>
+  <p class="lead" style="font-size:24px;margin-top:26px">共通點：<b>都沒有原本的課本</b>（來源資料）。</p>
+  </div>
+  <img class="char" src="../asset/char_guide_blue.png" alt="主講角色" style="width:180px">
+  <div class="foot"><span class="src">TTAOD-F, p.1–3；wiki/concepts/test-time-adaptation.md</span><span></span></div>
+  <aside class="notes">TTA 在乎的成本不同：不是訓練多久，而是每張圖處理多快、用多少記憶體。</aside>
+</section>
+
+<!-- 14 TTAOD-F -->
+<section class="slide">
+  <div class="deco sq" style="width:90px;height:90px;background:var(--yellow);right:360px;top:50px;transform:rotate(18deg);opacity:.85"></div>
+  <span class="kicker" style="background:var(--purple)">路線 3｜TTAOD-F</span>
+  <h2>會看文字的偵測員</h2>
+  <div class="body">
+  <ul class="pts" style="--c:var(--purple)">
+    <li>用看得懂文字指令的偵測器（Grounding DINO）</li>
+    <li>大腦不動，只調前面的「<b>便條紙</b>」</li>
+    <li>帶本<b>筆記本</b>，記住有把握的例子</li>
+  </ul>
+  <div class="row" style="margin-top:26px;max-width:820px">
+    <div class="card" style="border-color:var(--green)"><p style="font-size:19px">影像損壞測驗</p><div class="stat"><span class="big" style="font-size:44px;color:var(--muted)">44.8</span><span class="arrow" style="font-size:30px">→</span><span class="big" style="font-size:44px;color:var(--green)">56.2</span></div></div>
+    <div class="card" style="border-color:var(--red)"><p style="font-size:19px">代價：每張圖處理時間</p><div class="stat"><span class="big" style="font-size:44px;color:var(--red)">約 3 倍</span><span class="unit">213 → 694 ms</span></div></div>
+  </div>
+  </div>
+  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色">
+  <div class="foot"><span class="src">TTAOD-F, Table 1, p.7、Table 9, p.14；wiki/sources/ttaod-f-2025.md</span><span></span></div>
+  <aside class="notes">44.8 → 56.2 是 Pascal-C 的 AP50（直接用 → TTAOD-F）。時間為 TTAOD-F 論文自己量的 COCO-C 數字。「便條紙」＝提示調整（prompt tuning）；「筆記本」＝記憶庫（每類最多 20 個例子）。</aside>
+</section>
+
+<!-- 15 VLOD-TTA -->
+<section class="slide">
+  <div class="deco c" style="width:240px;height:240px;background:var(--purple-l);right:-60px;bottom:180px"></div>
+  <span class="kicker" style="background:var(--purple)">路線 3｜VLOD-TTA</span>
+  <h2>相信成群的意見</h2>
+  <div class="body">
+  <div class="row" style="align-items:center;gap:36px">
+    <div style="position:relative;width:340px;height:220px;background:#fff;border:3px solid var(--ink);border-radius:18px;flex:none">
+      <div class="box" style="left:40px;top:40px;width:110px;height:130px;border-color:var(--green)"></div>
+      <div class="box" style="left:48px;top:34px;width:104px;height:128px;border-color:var(--green)"></div>
+      <div class="box" style="left:34px;top:48px;width:116px;height:122px;border-color:var(--green)"></div>
+      <div class="box" style="left:52px;top:44px;width:96px;height:132px;border-color:var(--green)"><span style="background:var(--green)">人 ✓</span></div>
+      <div class="box" style="left:210px;top:110px;width:60px;height:50px;border-color:var(--red)"><span style="background:var(--red)">狗 ✗</span></div>
+    </div>
+    <p class="lead" style="font-size:24px;max-width:560px">一大群重疊的框都說「有人」，<b>多半是真的</b>；零星幾個框，多半是看錯。</p>
+  </div>
+  <p style="font-size:21px;font-weight:800;margin:16px 0 8px">和 TTAOD-F 比：</p>
+  <div class="row" style="max-width:760px">
+    <div class="card" style="border-color:var(--green)"><p style="font-size:19px">準確度（mAP）</p><div style="font-size:34px;font-weight:900">26.2 <span style="font-size:20px;color:var(--muted)">vs 26.0</span></div></div>
+    <div class="card" style="border-color:var(--blue)"><p style="font-size:19px">顯示卡記憶體</p><div style="font-size:34px;font-weight:900">3.8 GB <span style="font-size:20px;color:var(--muted)">vs 11.4</span></div></div>
+  </div>
+  </div>
+  <img class="char sm" src="../asset/char_smug_purple.png" alt="小技巧角色">
+  <div class="foot"><span class="src">VLOD-TTA, Fig. 1, p.2、Table 5, p.11；wiki/sources/vlod-tta-2026.md</span><span></span></div>
+  <aside class="notes">比較為 VLOD-TTA 論文量測（COCO-C、Grounding DINO）。它不需要老師模型，每張圖只調一步就重置。仍比直接用慢約 2.5 倍（531.6 vs 210.6 ms）。另一招：每類 16 句描述，挑最符合這張圖的 1/4。</aside>
+</section>
+
+<!-- 16 CGA -->
+<section class="slide">
+  <div class="deco dia" style="width:70px;height:70px;background:var(--yellow);left:960px;top:60px"></div>
+  <div class="deco c" style="width:200px;height:200px;background:var(--yellow-l);left:-60px;bottom:-40px"></div>
+  <span class="kicker" style="background:var(--yellow)">延伸｜CGA（圖片分類）</span>
+  <h2>分類也在解同一題</h2>
+  <div class="body">
+  <p class="lead" style="font-size:25px">卡車常被認成公車。<br>CGA 請 CLIP 想一想：</p>
+  <div class="card" style="border-color:var(--yellow);background:#fff;margin-top:20px;max-width:640px;flex:none;text-align:center">
+    <p style="font-size:30px;font-weight:900">「一台<span style="color:var(--blue)">看起來像公車</span>的<span style="color:var(--red)">卡車</span>」</p>
+  </div>
+  <p class="small" style="margin-top:20px">一樣是<b>借用通才模型</b>，題目換成「整張圖是什麼」。</p>
+  </div>
+  <img class="char" src="../asset/char_bored_yellow.png" alt="角色" style="width:180px">
+  <div class="foot"><span class="src">CGA, p.2、p.5；wiki/sources/cga-2026.md、class-confusion.md</span><span></span></div>
+  <aside class="notes">CGA 不是物件偵測，是圖片分類，只作延伸。四個資料集都小幅超越前作，大資料集較明顯（如 DomainNet-126：85.0 → 86.6）。</aside>
+</section>
+
+<!-- 17 限制 -->
+<section class="slide">
+  <div class="deco sq" style="width:130px;height:130px;background:var(--red-l);right:60px;top:40px;transform:rotate(12deg)"></div>
+  <span class="kicker" style="background:var(--red)">誠實面對</span>
+  <h2>還沒解決的事</h2>
+  <div class="body">
+  <ul class="pts" style="--c:var(--red)">
+    <li>沒見過的東西，只找回約十分之一</li>
+    <li>邊用邊學仍比直接用慢約 2.5 倍</li>
+    <li>行車場景小東西多，進步有限</li>
+    <li>論文數字也會出錯，要自己驗算</li>
+  </ul>
+  </div>
+  <img class="char" src="../asset/char_dizzy_yellow.png" alt="混亂角色" style="width:180px">
+  <div class="foot"><span class="src">SFUOD, Table 1, p.6；VLOD-TTA, Table 5, p.11、p.9；DSOD, Table 1, p.8</span><span></span></div>
+  <aside class="notes">第 4 點：製作這份簡報時發現 DSOD、FALCON、CGA、VLOD-TTA 都有內文與表格不一致的地方，紀錄在各 wiki 頁的「矛盾」段。</aside>
+</section>
+
+<!-- 18 小測驗 -->
+<section class="slide">
+  <div class="deco c" style="width:300px;height:300px;background:var(--green-l);right:-70px;top:-90px"></div>
+  <div class="deco dia" style="width:60px;height:60px;background:var(--pink);left:1000px;bottom:330px"></div>
+  <span class="kicker" style="background:var(--green)">回顧</span>
+  <h2>小測驗（點題目看答案）</h2>
+  <div class="body">
+  <div class="q" data-quiz><div class="qq">Q1. 晴天訓練的模型到霧天表現變差，這叫什麼？<span class="hint">點我</span></div><div class="qa">領域落差（Domain Shift）：訓練的世界和使用的世界不一樣。</div></div>
+  <div class="q" data-quiz><div class="qq">Q2.「無來源」最難在哪裡？<span class="hint">點我</span></div><div class="qa">拿不到原本的訓練資料，只剩舊模型＋沒有答案的新照片。</div></div>
+  <div class="q" data-quiz><div class="qq">Q3. 邊用邊學（TTA）和前面的方法差在哪？<span class="hint">點我</span></div><div class="qa">調整的時間點：上線時一張一張即時調整，而不是上線前先調好。</div></div>
+  </div>
+  <img class="char sm" src="../asset/char_guide_blue.png" alt="主講角色" style="right:200px">
+  <img class="char sm" src="../asset/char_determined_red.png" alt="" style="right:50px;width:130px">
+  <div class="foot"><span class="src">wiki/glossary.md；wiki/concepts/domain-shift.md、source-free-adaptation.md、test-time-adaptation.md</span><span></span></div>
+  <aside class="notes">收尾：三條路——請通才幫忙、認出沒見過的、邊用邊學。所有數字與出處都可在 wiki 回查。</aside>
+</section>
+
+</div></div>
+<div id="progress"></div><div id="pageno"></div><div id="help">← → 翻頁 · N 備註 · F 全螢幕</div><div id="notes"></div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var stage=document.getElementById('stage'), cur=0, notes=document.getElementById('notes');
+  function fit(){var s=Math.min(window.innerWidth/1280,window.innerHeight/720)*0.98;stage.style.transform='scale('+s+')';}
+  function show(i){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    slides[cur].classList.remove('active'); cur=i; slides[cur].classList.add('active');
+    document.getElementById('pageno').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+    var n=slides[cur].querySelector('aside.notes'); notes.innerHTML='<b>講者備註</b>　'+(n?n.innerHTML:'');
+    if(location.hash!=='#'+(cur+1)) history.replaceState(null,'','#'+(cur+1));
+  }
+  window.addEventListener('resize',fit); fit();
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();show(cur+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();show(cur-1);}
+    else if(e.key==='Home') show(0); else if(e.key==='End') show(slides.length-1);
+    else if(e.key==='n'||e.key==='N') notes.classList.toggle('show');
+    else if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement&&document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); else if(document.exitFullscreen) document.exitFullscreen(); }
+  });
+  document.getElementById('viewport').addEventListener('click',function(e){
+    if(e.target.closest('[data-quiz]')) return;
+    if(e.clientX>window.innerWidth/2) show(cur+1); else show(cur-1);
+  });
+  [].forEach.call(document.querySelectorAll('[data-quiz]'),function(q){q.addEventListener('click',function(){q.classList.toggle('open');});});
+  var tx=null; document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));tx=null;});
+  window.addEventListener('hashchange',function(){var k=parseInt(location.hash.slice(1),10);if(!isNaN(k)&&k-1!==cur)show(k-1);});
+  var h=parseInt(location.hash.slice(1),10); show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
