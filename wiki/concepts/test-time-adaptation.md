@@ -5,6 +5,8 @@ tags: [core, tta]
 sources: [ttaod-f-2025, vlod-tta-2026]
 aliases: [TTA, TTAOD, 邊用邊學]
 updated: 2026-11-21
+summary: 邊用邊學（TTA）與 SFOD 的差別
+order: 150
 ---
 # 測試時調整（TTA）——邊用邊學
 

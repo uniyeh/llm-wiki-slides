@@ -4,6 +4,8 @@ type: concept
 tags: [feature, object-focus]
 sources: [falcon-sfod-2026]
 updated: 2026-11-21
+summary: 模型在看哪裡
+order: 80
 ---
 # 注意力圖（特徵激活圖）
 

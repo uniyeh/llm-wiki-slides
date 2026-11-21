@@ -5,6 +5,8 @@ tags: [vlm, detector, open-vocabulary]
 sources: [ttaod-f-2025, vlod-tta-2026]
 aliases: [VLOD, Grounding DINO, GLIP, open-vocabulary detector]
 updated: 2026-11-21
+summary: 看得懂文字的偵測器（Grounding DINO、YOLO-World）
+order: 170
 ---
 # 圖文偵測器（Grounding DINO 等）
 

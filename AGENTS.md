@@ -21,7 +21,7 @@
 | `raw/` | 使用者放的論文 PDF | **只能讀**，不改、不刪、不改檔名 |
 | `asset/` | 幾何角色圖（Kenney Shape Characters, CC0） | 只能讀；新增圖片時必須同步更新 `asset/CREDITS.md` |
 | `wiki/` | LLM 維護的知識庫 | 可讀寫 |
-| `wiki/index.md` | 總目錄：每頁一行，格式為「連結 — 一句話摘要」 | 每次 ingest 後更新 |
+| `wiki/index.md` | 總目錄：**樹狀、可點擊的相對連結**（`[頁名](資料夾/頁名.md) — 摘要`），由 `python3 tools/build_index.py wiki` 自動產生，不手改 | 每次 ingest／lint 後重跑 |
 | `wiki/log.md` | 只能往後追加的操作紀錄 | 只能追加，不改舊紀錄 |
 | `wiki/sources/` | 一篇論文一頁 | 可讀寫 |
 | `wiki/concepts/` | 概念、方法、資料集各一頁 | 可讀寫 |
@@ -40,6 +40,8 @@ type: concept        # source | concept | method | dataset | comparison | glossa
 tags: [self-training, pseudo-label]
 sources: [lods-2023, irg-2023]   # 這頁的內容出自哪幾篇 sources/
 updated: 2026-11-21
+summary: 一句話摘要（index 用）
+order: 10        # 選填，同資料夾內排序，小的在前
 ---
 ```
 

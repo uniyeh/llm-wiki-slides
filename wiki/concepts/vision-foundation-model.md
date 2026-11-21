@@ -4,6 +4,8 @@ type: concept
 tags: [vfm, dinov2]
 sources: [dsod-2026, falcon-sfod-2026, cga-2026, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-21
+summary: 見多識廣的通才模型（DINOv2 等）
+order: 70
 ---
 # 視覺基礎模型（VFM）
 

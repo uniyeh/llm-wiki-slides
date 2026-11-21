@@ -4,6 +4,8 @@ type: method
 tags: [parameter-efficient]
 sources: [vlod-tta-2026]
 updated: 2026-11-21
+summary: 插入小轉接頭的參數高效微調
+order: 240
 ---
 # 轉接器（Adapter）
 

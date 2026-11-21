@@ -5,6 +5,8 @@ tags: [core, sfod, uda]
 sources: [dsod-2026, sfuod-2025, cga-2026, ttaod-f-2025]
 aliases: [SFOD, SFDA, SF-DAOD]
 updated: 2026-11-21
+summary: 沒有來源資料下的自適應（SFOD/SFDA）定義與比較
+order: 30
 ---
 # 無來源領域自適應（SFDA / SFOD）
 

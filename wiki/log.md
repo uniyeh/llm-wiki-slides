@@ -87,3 +87,6 @@
 
 ## [2026-11-22] outline+build+review | 簡報 v3（24 頁）
 - 第 21 頁改用 ideas.md X1、新增第 22 頁（X2、X3、X5）；模擬讀者檢查修 5 處；3 輪通過
+
+## [2026-11-22] lint | index.md 改為樹狀超連結
+- 新增 tools/build_index.py（依 frontmatter 的 summary／order 自動產生）；各頁補 summary、order；lint 加檢查 index 連結與 summary

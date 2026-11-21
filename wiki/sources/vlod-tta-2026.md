@@ -7,6 +7,8 @@ raw: raw/VLOD-TTA_Test-Time_Adaptation_Vision-Language_Object_Detectors_ECCV2026
 venue: ECCV 2026（依檔名）
 slide-role: 正式內容「另一條路：邊用邊學（TTA）」1 頁（使用者決策 2026-11-21）
 updated: 2026-11-22
+summary: （TTA）免老師的 IoU 加權熵＋提示挑選，同準確度、記憶體約 1/3
+order: 50
 ---
 # VLOD-TTA（ECCV 2026）
 

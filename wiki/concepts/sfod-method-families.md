@@ -4,6 +4,8 @@ type: concept
 tags: [overview, synthesis]
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-21
+summary: SFOD 方法家族總覽
+order: 60
 ---
 # SFOD 方法家族總覽
 

@@ -7,6 +7,8 @@ raw: raw/TTAOD-F_Test-Time_Adaptive_Object_Detection_Foundation_Model_NeurIPS202
 venue: NeurIPS 2025
 slide-role: 正式內容「另一條路：邊用邊學（TTA）」1 頁（使用者決策 2026-11-21）
 updated: 2026-11-22
+summary: （TTA）第一個用圖文偵測器做邊用邊學：提示調整＋記憶庫
+order: 40
 ---
 # TTAOD-F（NeurIPS 2025）
 

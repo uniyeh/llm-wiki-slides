@@ -4,6 +4,8 @@ type: concept
 tags: [basics]
 sources: [dsod-2026]
 updated: 2026-11-21
+summary: 找出「有什麼、在哪裡」
+order: 10
 ---
 # 物件偵測（Object Detection）
 

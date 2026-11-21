@@ -4,6 +4,8 @@ type: concept
 tags: [vfm, segmentation]
 sources: [falcon-sfod-2026]
 updated: 2026-11-21
+summary: 描輪廓的模型（OV-SAM）
+order: 90
 ---
 # 分割模型（OV-SAM 等）
 

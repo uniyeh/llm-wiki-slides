@@ -4,6 +4,8 @@ type: concept
 tags: [basics]
 sources: [dsod-2026]
 updated: 2026-11-21
+summary: 訓練環境≠使用環境，效能下滑
+order: 20
 ---
 # 領域落差（Domain Shift）
 

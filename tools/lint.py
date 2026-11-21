@@ -22,7 +22,10 @@ print('NO 白話版',[f for f in files if f.startswith('concepts/') and '白話�
 gl=open('glossary.md').read()
 print('NOT IN GLOSSARY',[s for s,f in stem.items() if f.startswith('concepts/') and f'[[{s}]]' not in gl])
 print('SOURCE MISSING SECTIONS',[f for f in files if f.startswith('sources/') and not all(k in open(f).read() for k in ('## 設計決策與消融證據','## 作者提到的限制與未來方向','## 矛盾'))])
-print('NOT IN INDEX',[s for s in stem if s not in skip and f'[[{s}]]' not in open('index.md').read()])
+idx=open('index.md').read()
+print('NOT IN INDEX',[s for s,f in stem.items() if s not in skip and f'({f})' not in idx])
+print('BROKEN INDEX LINKS',[m for m in re.findall(r'\]\(([^)]+\.md)\)',idx) if not os.path.exists(m)])
+print('MISSING summary',[f for f in files if f not in ('index.md','log.md') and 'summary:' not in open(f).read().split('---')[1]])
 num=re.compile(r'\d+\.\d|\d{2,}')
 cite=re.compile(r'p\.\s?\d|Table|Fig\.')
 print('--- numeric lines w/o citation')
@@ -31,7 +34,7 @@ for f in files:
     inblk=False
     for i,l in enumerate(open(f).read().split('\n'),1):
         if l.startswith('---') and i<15: continue
-        if re.match(r'^(title|venue|raw|updated|sources|tags|aliases|type|slide-role|name):',l): continue
+        if re.match(r'^(title|venue|raw|updated|sources|tags|aliases|type|slide-role|name|summary|order|generated-by):',l): continue
         if l.startswith('```'): inblk=not inblk; continue
         if inblk or l.startswith('|---') or l.startswith('#'): continue
         l2=re.sub(r'\[\[[^\]]*\]\]','',l)

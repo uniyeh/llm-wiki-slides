@@ -4,6 +4,8 @@ type: method
 tags: [open-set, unknown-labeling]
 sources: [sfuod-2025]
 updated: 2026-11-21
+summary: SFUOD 的協作調整與未知標註
+order: 220
 ---
 # 協作調整與 PAUL（CollaPAUL）
 

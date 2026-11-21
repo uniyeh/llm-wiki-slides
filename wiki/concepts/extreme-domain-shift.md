@@ -4,6 +4,8 @@ type: concept
 tags: [benchmark]
 sources: [falcon-sfod-2026]
 updated: 2026-11-21
+summary: 照片↔插畫、可見光↔紅外線
+order: 120
 ---
 # 極端領域落差
 

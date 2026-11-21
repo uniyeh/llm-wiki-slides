@@ -4,6 +4,8 @@ type: method
 tags: [deployment]
 sources: [dsod-2026]
 updated: 2026-11-21
+summary: 大模型教小模型
+order: 210
 ---
 # 知識蒸餾（Knowledge Distillation）
 

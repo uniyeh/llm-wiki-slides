@@ -4,6 +4,8 @@ type: method
 tags: [self-training, core]
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, ttaod-f-2025]
 updated: 2026-11-21
+summary: 師生自我訓練框架（EMA 老師）
+order: 190
 ---
 # Mean Teacher
 

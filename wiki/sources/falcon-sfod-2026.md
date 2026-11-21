@@ -6,6 +6,8 @@ sources: [falcon-sfod-2026]
 raw: raw/FALCON-SFOD_Foundation_Model_Priors_Object_Focus_SFOD_arXiv2026_[AW].pdf
 venue: arXiv 2512.17514v3（2026-02）
 updated: 2026-11-22
+summary: 用 OV-SAM 遮罩把注意力拉回物體＋抗雜訊、顧及少數類別的損失
+order: 20
 ---
 # FALCON-SFOD（2026）
 

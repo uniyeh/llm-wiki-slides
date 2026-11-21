@@ -4,6 +4,8 @@ type: method
 tags: [detector, transformer]
 sources: [dsod-2026]
 updated: 2026-11-21
+summary: Transformer 偵測器（Deformable-DETR）
+order: 200
 ---
 # DETR / Deformable-DETR
 

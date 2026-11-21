@@ -4,6 +4,8 @@ type: concept
 tags: [basics, detection]
 sources: [vlod-tta-2026, dsod-2026]
 updated: 2026-11-21
+summary: 候選框與重疊程度
+order: 180
 ---
 # 候選框與重疊程度（IoU）
 

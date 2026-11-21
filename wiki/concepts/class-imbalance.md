@@ -4,6 +4,8 @@ type: concept
 tags: [problem]
 sources: [falcon-sfod-2026]
 updated: 2026-11-21
+summary: 類別多寡不均、長尾
+order: 100
 ---
 # 類別不平衡／長尾
 

@@ -4,6 +4,8 @@ type: comparison
 tags: [synthesis, ideas, open-problems]
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-22
+summary: （SYNTHESIZE）延伸發想總表：作者未來方向、交叉發想、共同盲點、建議加讀論文
+order: 30
 ---
 # 延伸發想總表
 

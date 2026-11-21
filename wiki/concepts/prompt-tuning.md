@@ -4,6 +4,8 @@ type: method
 tags: [parameter-efficient]
 sources: [ttaod-f-2025, cga-2026, vlod-tta-2026]
 updated: 2026-11-21
+summary: 只調便條紙的參數高效微調
+order: 230
 ---
 # 提示調整（Prompt Tuning）
 

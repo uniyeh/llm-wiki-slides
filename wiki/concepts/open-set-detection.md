@@ -5,6 +5,8 @@ tags: [open-set, problem]
 sources: [sfuod-2025]
 aliases: [closed-set, open-set, unknown object]
 updated: 2026-11-21
+summary: 已知／未知物體，封閉 vs 開放集合
+order: 130
 ---
 # 已知／未知物體：封閉集合 vs 開放集合
 

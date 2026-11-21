@@ -4,6 +4,8 @@ type: concept
 tags: [basics]
 sources: [cga-2026]
 updated: 2026-11-21
+summary: 分類 vs 偵測
+order: 140
 ---
 # 圖片分類 vs 物件偵測
 

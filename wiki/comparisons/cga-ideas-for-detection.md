@@ -4,6 +4,8 @@ type: comparison
 tags: [synthesis, ideas]
 sources: [cga-2026, falcon-sfod-2026, vlod-tta-2026, sfuod-2025]
 updated: 2026-11-22
+summary: （發想）把 CGA 的混淆提示帶回偵測
+order: 40
 ---
 # 延伸發想：把 CGA 的點子帶回物件偵測
 

@@ -4,6 +4,8 @@ type: dataset
 tags: [benchmark, metric]
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-21
+summary: Cityscapes / Foggy / BDD100k / Sim10k / KITTI、mAP
+order: 260
 ---
 # 常用資料集與評估指標
 

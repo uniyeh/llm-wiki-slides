@@ -5,6 +5,8 @@ tags: [vfm, clip, prompt]
 sources: [cga-2026, ttaod-f-2025]
 aliases: [CLIP, VLM]
 updated: 2026-11-21
+summary: 圖文模型 CLIP、提示詞
+order: 160
 ---
 # 圖文模型（CLIP 等）
 

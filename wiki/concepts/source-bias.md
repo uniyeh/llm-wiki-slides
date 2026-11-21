@@ -4,6 +4,8 @@ type: concept
 tags: [problem]
 sources: [dsod-2026]
 updated: 2026-11-21
+summary: 調整後仍偏向來源領域的核心問題
+order: 40
 ---
 # 來源偏差（Source Bias）
 

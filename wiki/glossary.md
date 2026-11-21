@@ -3,6 +3,8 @@ title: 術語表
 type: glossary
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-21
+summary: 全部術語的中英對照與白話
+order: 10
 ---
 # 術語表
 

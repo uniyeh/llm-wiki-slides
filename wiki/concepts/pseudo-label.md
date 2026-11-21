@@ -4,6 +4,8 @@ type: concept
 tags: [self-training]
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025]
 updated: 2026-11-21
+summary: 模型自己出的參考答案
+order: 50
 ---
 # 偽標籤（Pseudo-label）
 

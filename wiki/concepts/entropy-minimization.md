@@ -4,6 +4,8 @@ type: method
 tags: [tta, objective]
 sources: [vlod-tta-2026]
 updated: 2026-11-21
+summary: 讓模型更果斷的調整目標
+order: 250
 ---
 # 熵最小化
 

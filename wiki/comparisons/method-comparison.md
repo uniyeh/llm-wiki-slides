@@ -3,6 +3,8 @@ title: 方法比較
 type: comparison
 sources: [dsod-2026, falcon-sfod-2026, sfuod-2025, cga-2026, ttaod-f-2025, vlod-tta-2026]
 updated: 2026-11-21
+summary: 各論文方法並列
+order: 10
 ---
 # 方法比較
 

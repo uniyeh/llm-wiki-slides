@@ -4,6 +4,8 @@ type: dataset
 tags: [metric]
 sources: [sfuod-2025]
 updated: 2026-11-21
+summary: 開放集合指標
+order: 270
 ---
 # 召回率與 H-Score
 

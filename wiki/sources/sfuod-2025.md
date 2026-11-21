@@ -6,6 +6,8 @@ sources: [sfuod-2025]
 raw: raw/SFUOD_Source-Free_Unknown_Object_Detection_ICCV2025_[AW].pdf
 venue: ICCV 2025
 updated: 2026-11-22
+summary: 新情境：無來源資料＋偵測未知物體；CollaPAUL 協作調整＋主軸投影標未知
+order: 30
 ---
 # SFUOD / CollaPAUL（ICCV 2025）
 

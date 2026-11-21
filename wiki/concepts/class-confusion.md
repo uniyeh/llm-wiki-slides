@@ -4,6 +4,8 @@ type: concept
 tags: [problem, fine-grained]
 sources: [cga-2026]
 updated: 2026-11-21
+summary: 類別容易認錯且有方向性
+order: 110
 ---
 # 類別混淆（Class Confusion）
 
