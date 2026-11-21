@@ -15,9 +15,9 @@ order: 40
 ## 重點
 - 定義：調整後的模型仍偏向來源領域，導致泛化差，並在自我訓練中累積錯誤。（DSOD, p.1）
 - 為什麼 SFOD 特別嚴重：UDA 能同時看兩個領域來學共通特徵；SFOD 只能看目標資料。（DSOD, p.1–2）
-- 對策之一：引入不偏向任何領域的 [[vision-foundation-model]]（DSOD）。
+- 對策之一：引入不偏向任何領域的 [vision-foundation-model](vision-foundation-model.md)（DSOD）。
 
-## 和[[domain-shift|領域落差]]有什麼不同？
+## 和[領域落差](domain-shift.md)有什麼不同？
 | | 領域落差 | 來源偏差 |
 |---|---|---|
 | 是誰的問題 | **資料**：訓練環境 ≠ 使用環境（DSOD, p.1） | **模型**：調整後仍偏向來源領域（DSOD, p.1） |
@@ -26,4 +26,4 @@ order: 40
 | 為何 SFOD 特別嚴重 | — | 只看得到新資料、無法同時對照新舊資料學共通特徵；錯誤還會在自我訓練中累積（DSOD, p.1–2） |
 
 ## 相關
-[[pseudo-label]] · [[mean-teacher]] · [[dsod-2026]]
+[pseudo-label](pseudo-label.md) · [mean-teacher](mean-teacher.md) · [dsod-2026](../sources/dsod-2026.md)

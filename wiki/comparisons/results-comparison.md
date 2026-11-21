@@ -14,10 +14,10 @@ order: 20
 ## 晴→霧（Cityscapes → Foggy Cityscapes, mAP@0.5）
 | 論文 | Source only（起點） | 方法 | 進步 | 來源 |
 |---|---|---|---|---|
-| [[dsod-2026]] | 29.5 | 48.1 ⚠️ | +18.6 | DSOD, Table 1, p.8 |
-| [[falcon-sfod-2026]] | 25.2 | 46.9 | +21.7 | FALCON, Table 1, p.6 |
+| [dsod-2026](../sources/dsod-2026.md) | 29.5 | 48.1 ⚠️ | +18.6 | DSOD, Table 1, p.8 |
+| [falcon-sfod-2026](../sources/falcon-sfod-2026.md) | 25.2 | 46.9 | +21.7 | FALCON, Table 1, p.6 |
 
-⚠️ DSOD 的 48.1 與其各類別平均（46.4，自算自 DSOD, Table 1, p.8）不符，見 [[dsod-2026]]「矛盾」。
+⚠️ DSOD 的 48.1 與其各類別平均（46.4，自算自 DSOD, Table 1, p.8）不符，見 [dsod-2026](../sources/dsod-2026.md)「矛盾」。
 
 ## 其他任務
 | 任務 | DSOD（起點→結果） | FALCON（起點→結果） |
@@ -37,10 +37,10 @@ order: 20
 ## 另一條路：邊用邊學（TTA，基準不同，不與 SFOD 比較）
 | 基準 | 直接用 | Mean Teacher | 方法 | 來源 |
 |---|---|---|---|---|
-| Pascal-C（AP50） | 44.8 | 51.5 | [[ttaod-f-2025]] 56.2 | TTAOD-F, Table 1, p.7 |
-| COCO-C（mAP） | 20.6 | 24.1 | [[ttaod-f-2025]] 26.0 | TTAOD-F, Table 2, p.7 |
-| ODinW-13（mAP） | 52.8 | 53.1 | [[ttaod-f-2025]] 54.2 | TTAOD-F, Fig. 4, p.8 |
-| 推論延遲（ms/張，COCO-C） | 213.1 | 635.0 | [[ttaod-f-2025]] 693.8 | TTAOD-F, Table 9, p.14 |
+| Pascal-C（AP50） | 44.8 | 51.5 | [ttaod-f-2025](../sources/ttaod-f-2025.md) 56.2 | TTAOD-F, Table 1, p.7 |
+| COCO-C（mAP） | 20.6 | 24.1 | [ttaod-f-2025](../sources/ttaod-f-2025.md) 26.0 | TTAOD-F, Table 2, p.7 |
+| ODinW-13（mAP） | 52.8 | 53.1 | [ttaod-f-2025](../sources/ttaod-f-2025.md) 54.2 | TTAOD-F, Fig. 4, p.8 |
+| 推論延遲（ms/張，COCO-C） | 213.1 | 635.0 | [ttaod-f-2025](../sources/ttaod-f-2025.md) 693.8 | TTAOD-F, Table 9, p.14 |
 
 ### TTAOD-F vs VLOD-TTA（同條件，VLOD-TTA 量測，COCO-C，Grounding DINO）
 | | 直接用 | TTAOD-F | VLOD-TTA | 來源 |
@@ -53,7 +53,7 @@ order: 20
 ⚠️ TTAOD-F 延遲兩篇量測不同（693.8 ms：TTAOD-F, Table 9, p.14；701.9 ms：VLOD-TTA, Table 5, p.11），引用時標明出處。
 
 ## 延伸：分類版 SFDA（準確率 %，不與偵測比較）
-| 資料集 | 前最佳 ProDe-V | [[cga-2026]] | 來源 |
+| 資料集 | 前最佳 ProDe-V | [cga-2026](../sources/cga-2026.md) | 來源 |
 |---|---|---|---|
 | VisDA | 91.6 | 92.2 | CGA, Table I, p.7 |
 | DomainNet-126 | 85.0 | 86.6 | CGA, Table III, p.8 |

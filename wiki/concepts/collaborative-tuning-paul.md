@@ -20,4 +20,4 @@ order: 220
 - 效果：cross-domain attention 優於 prefix-tuning（H 15.95 vs 12.57）；PAUL 優於只用信心或注意力挑未知（U-Recall 10.59 vs 3.56 / 4.00）。（SFUOD, Table 6–7, p.7）
 
 ## 相關
-[[open-set-detection]] · [[pseudo-label]] · [[sfuod-2025]]
+[open-set-detection](open-set-detection.md) · [pseudo-label](pseudo-label.md) · [sfuod-2025](../sources/sfuod-2025.md)

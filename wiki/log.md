@@ -90,3 +90,6 @@
 
 ## [2026-11-22] lint | index.md 改為樹狀超連結
 - 新增 tools/build_index.py（依 frontmatter 的 summary／order 自動產生）；各頁補 summary、order；lint 加檢查 index 連結與 summary
+
+## [2026-11-22] lint | 連結格式改為 markdown 相對路徑
+- 329 個雙中括號連結轉為 markdown 相對路徑連結（wiki/ 與 slides/outline.md）；lint.py 改為解析相對連結，並檢查是否殘留雙中括號

@@ -18,11 +18,11 @@ order: 170
 - 代表：GLIP、Grounding DINO（把圖文預訓練融入 Transformer 偵測器 DINO）。（TTAOD-F, p.3）
 - Grounding DINO 的文字輸入：類別名稱用句點串起來，例如 "aeroplane. bicycle. bird."，最多 256 個 token。（TTAOD-F, p.4）
 - 不調整直接用，在 Pascal-C 已有 44.8 AP50，與舊 SOTA 方法 STFAR（45.2）相當。（TTAOD-F, Table 1, p.7–8）
-- 仍會因分布轉移而退步，所以需要 [[test-time-adaptation]]。（TTAOD-F, p.4）
+- 仍會因分布轉移而退步，所以需要 [test-time-adaptation](test-time-adaptation.md)。（TTAOD-F, p.4）
 - YOLO-World：CNN 架構、為即時開放詞彙偵測設計。（VLOD-TTA, p.4）
 - 運作：候選框特徵與類別文字特徵算 cosine 相似度當分數。（VLOD-TTA, Eq. 1, p.5）
 - 提示詞措辭很敏感；多句平均不一定有效，依圖挑選較好。（VLOD-TTA, p.6, Fig. 5a, p.13）
-- 屬於 [[vision-language-model]] 在偵測上的延伸。
+- 屬於 [vision-language-model](vision-language-model.md) 在偵測上的延伸。
 
 ## 相關
-[[ttaod-f-2025]] · [[prompt-tuning]] · [[open-set-detection]]
+[ttaod-f-2025](../sources/ttaod-f-2025.md) · [prompt-tuning](prompt-tuning.md) · [open-set-detection](open-set-detection.md)

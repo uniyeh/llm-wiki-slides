@@ -17,11 +17,11 @@ order: 160
 - CLIP：影像編碼器＋文字編碼器，以兩者特徵的 cosine 相似度做零樣本分類。（CGA, p.3）
 - **提示詞（prompt）**：文字輸入的模板，例如「A picture of a [類別]」；可只微調提示詞、凍結其餘參數（CoOp 方式）。（CGA, p.3）
 - CGA 加入混淆提示詞「[i] looks like a [j]」讓 CLIP 分辨更細。（CGA, p.5）
-- 屬於 [[vision-foundation-model]] 的一種。
-- 用在偵測上就是[[vision-language-detector|圖文偵測器]]（GLIP、Grounding DINO）。（TTAOD-F, p.3）
-- 調整方式見 [[prompt-tuning]]。
+- 屬於 [vision-foundation-model](vision-foundation-model.md) 的一種。
+- 用在偵測上就是[圖文偵測器](vision-language-detector.md)（GLIP、Grounding DINO）。（TTAOD-F, p.3）
+- 調整方式見 [prompt-tuning](prompt-tuning.md)。
 
-## 和[[vision-foundation-model|視覺基礎模型]]、[[vision-language-detector|圖文偵測器]]有什麼不同？
+## 和[視覺基礎模型](vision-foundation-model.md)、[圖文偵測器](vision-language-detector.md)有什麼不同？
 | | 視覺基礎模型（DINOv2、OV-SAM） | 圖文模型（CLIP） | 圖文偵測器（Grounding DINO、YOLO-World） |
 |---|---|---|---|
 | 懂文字嗎 | 否（OV-SAM 為開放詞彙分割，但本 wiki 只用其不分類別遮罩） | 是 | 是 |
@@ -29,4 +29,4 @@ order: 160
 | 本 wiki 用途 | 當顧問或畫重點 | 分類的參考答案 | 直接當偵測器 |
 
 ## 相關
-[[cga-2026]] · [[class-confusion]]
+[cga-2026](../sources/cga-2026.md) · [class-confusion](class-confusion.md)

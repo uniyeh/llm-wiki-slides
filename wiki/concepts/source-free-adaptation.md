@@ -23,23 +23,23 @@ order: 30
 | UDA / UDAOD | ✅ 有 | ❌ | 事前離線 |
 | **SFOD（本主題）** | ❌ 無，只有來源模型 | ❌ | 事前離線 |
 | TTA / TTAOD | ❌ 無 | ❌ | 上線時即時（TTAOD-F, p.1） |
-（DSOD, p.1–3）→ TTA 詳見 [[test-time-adaptation]]
+（DSOD, p.1–3）→ TTA 詳見 [test-time-adaptation](test-time-adaptation.md)
 
 ## 正式定義
 來源資料 D_s = {X_s, Y_s}、目標資料 D_t = {X_t}（無標註）。目標：把在 D_s 上預訓練的偵測器 G 調整到 D_t。兩大挑戰：目標無標註、來源資料不可取得。（DSOD, p.3）
 
 ## 主流做法
-多數方法採自我訓練（self-training），尤其是 [[mean-teacher]] + [[pseudo-label]]。（DSOD, p.2）
-→ 方法分類見 [[sfod-method-families]]。
+多數方法採自我訓練（self-training），尤其是 [mean-teacher](mean-teacher.md) + [pseudo-label](pseudo-label.md)。（DSOD, p.2）
+→ 方法分類見 [sfod-method-families](sfod-method-families.md)。
 
 ## 分類版 SFDA
-- 同樣設定也用在[[image-classification|圖片分類]]，例：[[cga-2026]]。多數方法依賴「同類樣本會聚在一起」的假設，細粒度時失效。（CGA, p.2）
+- 同樣設定也用在[圖片分類](image-classification.md)，例：[cga-2026](../sources/cga-2026.md)。多數方法依賴「同類樣本會聚在一起」的假設，細粒度時失效。（CGA, p.2）
 
 ## 隱含假設：封閉集合
-- 一般 SFOD 假設新環境只會出現來源學過的類別；[[sfuod-2025]] 放寬成「也要找出未知物體」。（SFUOD, p.1）→ [[open-set-detection]]
+- 一般 SFOD 假設新環境只會出現來源學過的類別；[sfuod-2025](../sources/sfuod-2025.md) 放寬成「也要找出未知物體」。（SFUOD, p.1）→ [open-set-detection](open-set-detection.md)
 
 ## 主要難題
-[[source-bias]] · 偽標籤雜訊（見 [[pseudo-label]]）
+[source-bias](source-bias.md) · 偽標籤雜訊（見 [pseudo-label](pseudo-label.md)）
 
 ## 相關
-[[domain-shift]] · [[benchmarks]] · [[dsod-2026]]
+[domain-shift](domain-shift.md) · [benchmarks](benchmarks.md) · [dsod-2026](../sources/dsod-2026.md)

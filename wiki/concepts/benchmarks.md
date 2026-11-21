@@ -33,7 +33,7 @@ order: 260
 - 跨場景：Cityscapes → BDD100k
 - 合成 → 真實：Sim10k → Cityscapes
 - 跨相機：KITTI → Cityscapes（FALCON, p.6）
-- 極端落差：見 [[extreme-domain-shift]]
+- 極端落差：見 [extreme-domain-shift](extreme-domain-shift.md)
 - 影像損壞（TTA 常用）：Pascal-C、COCO-C；跨資料集：ODinW-13（TTAOD-F, p.6–7）
 
 ## 矛盾
@@ -42,8 +42,8 @@ order: 260
 ## 指標
 - **mAP@0.5**：預測框與正解重疊（IoU）≥ 0.5 才算對，各類別平均精確度再取平均。（DSOD, p.7）
 - **Source only**＝不做調整的下限；**Oracle**＝用目標標註訓練的上限。（DSOD, p.7）
-- 開放集合任務另有 Known mAP、U-Recall、H-Score → [[recall-and-h-score]]
+- 開放集合任務另有 Known mAP、U-Recall、H-Score → [recall-and-h-score](recall-and-h-score.md)
 - ⚠️ 不同論文的 Source only 不同（C→F：DSOD 29.5、FALCON 25.2），因基線偵測器不同，跨論文請比「進步幅度」。（DSOD, Table 1, p.8；FALCON, Table 1, p.6）
 
 ## 相關
-[[domain-shift]] · [[object-detection]]
+[domain-shift](domain-shift.md) · [object-detection](object-detection.md)

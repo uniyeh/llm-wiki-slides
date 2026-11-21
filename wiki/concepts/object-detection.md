@@ -14,9 +14,9 @@ order: 10
 
 ## 重點
 - 輸出 = 一組「框（bounding box）+ 類別 + 信心分數」。
-- 常見架構：兩階段（Faster R-CNN）、一階段、無錨框；近年有 Transformer 架構的 [[detr]]。（DSOD, p.2）
+- 常見架構：兩階段（Faster R-CNN）、一階段、無錨框；近年有 Transformer 架構的 [detr](detr.md)。（DSOD, p.2）
 - 傳統偵測器會對同一物體產生多個框，需用 NMS 去重；DETR 系列不需要。（DSOD, p.2）
-- 評估指標見 [[benchmarks]]（mAP）。
+- 評估指標見 [benchmarks](benchmarks.md)（mAP）。
 
 ## 相關
-[[domain-shift]] · [[source-free-adaptation]]
+[domain-shift](domain-shift.md) · [source-free-adaptation](source-free-adaptation.md)

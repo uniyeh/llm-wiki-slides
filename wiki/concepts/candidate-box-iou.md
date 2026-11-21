@@ -15,8 +15,8 @@ order: 180
 ## 重點
 - 候選框數量：YOLO-World 約 8,400 個、Grounding DINO 約 900 個；後處理（門檻、NMS）會刪掉大多數。（VLOD-TTA, p.6）
 - 互相重疊、同類別的一群框較可能是真物體；零散的框通常不可靠。（VLOD-TTA, p.6）
-- mAP@0.5 就是用 IoU ≥ 0.5 判斷預測框算不算對。（DSOD, p.7）→ [[benchmarks]]
+- mAP@0.5 就是用 IoU ≥ 0.5 判斷預測框算不算對。（DSOD, p.7）→ [benchmarks](benchmarks.md)
 - VLOD-TTA 的 IWE 依「所屬重疊群大小」加權。（VLOD-TTA, Eq. 3, p.6）
 
 ## 相關
-[[object-detection]] · [[entropy-minimization]] · [[vlod-tta-2026]]
+[object-detection](object-detection.md) · [entropy-minimization](entropy-minimization.md) · [vlod-tta-2026](../sources/vlod-tta-2026.md)

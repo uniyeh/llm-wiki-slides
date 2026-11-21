@@ -15,7 +15,7 @@ order: 140
 
 ## 重點
 - CGA 處理的是分類版的 SFDA，資料集為 Office-31、Office-Home、VisDA、DomainNet-126，指標為準確率。（CGA, p.6）
-- 偵測見 [[object-detection]]；本 wiki 主題是偵測，分類只作延伸。
+- 偵測見 [object-detection](object-detection.md)；本 wiki 主題是偵測，分類只作延伸。
 
 ## 相關
-[[object-detection]] · [[cga-2026]]
+[object-detection](object-detection.md) · [cga-2026](../sources/cga-2026.md)

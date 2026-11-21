@@ -29,4 +29,4 @@ CGA 在「圖片分類」發現：容易搞混的類別是**有方向的**（卡
 | 5 | 「不認識的東西」常被誤認成哪個已知類別？混淆方向能否幫忙找未知？ | SFUOD 指出已知／未知互相誤判（SFUOD, p.2） |
 
 ## 相關
-[[ideas]] · [[cga-2026]] · [[class-confusion]] · [[falcon-sfod-2026]] · [[vlod-tta-2026]] · [[sfuod-2025]]
+[ideas](ideas.md) · [cga-2026](../sources/cga-2026.md) · [class-confusion](../concepts/class-confusion.md) · [falcon-sfod-2026](../sources/falcon-sfod-2026.md) · [vlod-tta-2026](../sources/vlod-tta-2026.md) · [sfuod-2025](../sources/sfuod-2025.md)

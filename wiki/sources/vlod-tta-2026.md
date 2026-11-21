@@ -16,23 +16,23 @@ order: 50
 比 TTAOD-F 更省的「邊用邊學」：不用老師模型，改用「重視成群重疊框」的熵最小化（IWE），再依每張圖挑選最相關的文字描述（IPS），準確度相當但記憶體只要約 1/3。（VLOD-TTA, p.1–3, Table 5, p.11）
 
 ## 要解決的問題
-- [[vision-language-detector|圖文偵測器]]零樣本很強，但遇到分布轉移仍會退步；SFDA 要事先收集目標資料、離線調整，不適合部署 → 需要 [[test-time-adaptation|TTA]]。（VLOD-TTA, p.1–2）
-- 唯一前作 [[ttaod-f-2025]]：老師模型＋額外前向傳遞＋DINOv2 記憶 → 測試時開銷大；且只適用 Transformer 偵測器，無法用在 CNN 型的 YOLO-World。（VLOD-TTA, p.2, p.4）
-- 分類常用的[[entropy-minimization|熵最小化]]用在偵測有兩個問題：會放大確認偏誤（把位置錯的框也變得很有自信）、忽略候選框之間的結構。（VLOD-TTA, p.2–3）
+- [圖文偵測器](../concepts/vision-language-detector.md)零樣本很強，但遇到分布轉移仍會退步；SFDA 要事先收集目標資料、離線調整，不適合部署 → 需要 [TTA](../concepts/test-time-adaptation.md)。（VLOD-TTA, p.1–2）
+- 唯一前作 [ttaod-f-2025](ttaod-f-2025.md)：老師模型＋額外前向傳遞＋DINOv2 記憶 → 測試時開銷大；且只適用 Transformer 偵測器，無法用在 CNN 型的 YOLO-World。（VLOD-TTA, p.2, p.4）
+- 分類常用的[熵最小化](../concepts/entropy-minimization.md)用在偵測有兩個問題：會放大確認偏誤（把位置錯的框也變得很有自信）、忽略候選框之間的結構。（VLOD-TTA, p.2–3）
 - 分類常用的「多句提示詞平均」用在偵測幾乎沒幫助，甚至變差。（VLOD-TTA, p.3）
 
 ## 方法（白話＋技術）
 **白話**：偵測器會對同一個東西畫出一大堆重疊的框——一大群框都說「這裡有人」多半是真的；孤零零幾個框說「這裡有狗」多半是看錯。VLOD-TTA 調整時只相信「成群」的意見。另外，每類準備 16 句描述，針對眼前這張圖挑最貼切的幾句來用。
 
 **技術**（VLOD-TTA, p.5–7）：
-1. **IWE（IoU-weighted Entropy）**：對每類把預測為該類的[[candidate-box-iou|候選框]]建圖，IoU ≥ θ 就連邊；框的權重 w_i = |所在連通塊大小|^γ（γ=1.1）；以加權平均熵當調整目標，權重不回傳梯度。（Eq. 3, p.6；γ, p.8）
+1. **IWE（IoU-weighted Entropy）**：對每類把預測為該類的[候選框](../concepts/candidate-box-iou.md)建圖，IoU ≥ θ 就連邊；框的權重 w_i = |所在連通塊大小|^γ（γ=1.1）；以加權平均熵當調整目標，權重不回傳梯度。（Eq. 3, p.6；γ, p.8）
    - YOLO-World 約 8,400 個候選框、Grounding DINO 約 900 個。（p.6）
 2. **IPS（Image-conditioned Prompt Selection）**：每類 T=16 句 GPT 生成提示；計算每句與本圖候選框特徵的平均相似度，只保留前 ρ=25%；再加一個可學殘差向量 Δ；最終分數 = λ·提示分數 + (1−λ)·原分數。（Eq. 4, p.6–7；p.8）
-3. **只更新少量參數**：YOLO-World 在骨幹與 neck 插 Conv-[[adapter]]；Grounding DINO 只在文字編碼器插 MLP-Adapter。（p.7–8）
+3. **只更新少量參數**：YOLO-World 在骨幹與 neck 插 Conv-[adapter](../concepts/adapter.md)；Grounding DINO 只在文字編碼器插 MLP-Adapter。（p.7–8）
 4. **每張圖只調一步，預測後重置回初始**（不跨圖累積）；batch size 1。（p.7–8）
 
 ## 實驗設定（資料集、指標）
-- 風格：Watercolor、ClipArt、Comic；行車：Cityscapes、BDD100K；低光：ExDark；影像損壞：PASCAL-C、COCO-C（15 種損壞 × 5 嚴重度）；另有 ODinW-13。（p.7–8, p.12）→ [[benchmarks]]
+- 風格：Watercolor、ClipArt、Comic；行車：Cityscapes、BDD100K；低光：ExDark；影像損壞：PASCAL-C、COCO-C（15 種損壞 × 5 嚴重度）；另有 ODinW-13。（p.7–8, p.12）→ [benchmarks](../concepts/benchmarks.md)
 - 偵測器：YOLO-World-Small（YW）、Grounding DINO-Tiny（GD）；比較 Zero-shot、TPT、VPT、DPE、Adapter（Tent 目標）。（p.8）
 
 ## 主要結果（已驗算：PASCAL-C 平均、COCO-C 分組加權平均皆一致）
@@ -89,6 +89,6 @@ order: 50
 - 內文：YW 風格三資料集 AP50 平均 **+5.8**（p.9）；表格自算為 **+5.7**（Table 1, p.9）。依規則用表格。
 
 ## 和其他論文的關係
-- 直接比較並批評 [[ttaod-f-2025]]：同準確度、更省資源；並借用其 Warm-start 得到 VLOD-TTA*。（p.11）
-- 與 SFOD 論文同樣不用來源資料，但屬「邊用邊學」，見 [[test-time-adaptation]]。
-- 「多個提示詞」的想法與 [[cga-2026]] 的混淆提示詞相呼應：CGA 加入「看起來像 X 的 Y」；VLOD-TTA 依圖挑選最相關的描述。
+- 直接比較並批評 [ttaod-f-2025](ttaod-f-2025.md)：同準確度、更省資源；並借用其 Warm-start 得到 VLOD-TTA*。（p.11）
+- 與 SFOD 論文同樣不用來源資料，但屬「邊用邊學」，見 [test-time-adaptation](../concepts/test-time-adaptation.md)。
+- 「多個提示詞」的想法與 [cga-2026](cga-2026.md) 的混淆提示詞相呼應：CGA 加入「看起來像 X 的 Y」；VLOD-TTA 依圖挑選最相關的描述。

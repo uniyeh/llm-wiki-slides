@@ -17,4 +17,4 @@ order: 200
 - Deformable-DETR 用稀疏注意力改善收斂速度，是 DSOD 等 SFOD 方法的基線偵測器。（DSOD, p.2, p.7）
 
 ## 相關
-[[object-detection]] · [[dsod-2026]]
+[object-detection](object-detection.md) · [dsod-2026](../sources/dsod-2026.md)

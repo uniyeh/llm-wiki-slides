@@ -1,42 +1,45 @@
-"""LLM Wiki lint：python3 tools/lint.py wiki"""
-import re,glob,os,sys
-root=sys.argv[1]; os.chdir(root)
-files=[f for f in glob.glob('**/*.md',recursive=True)]
-stem={os.path.splitext(os.path.basename(f))[0]:f for f in files}
-link=re.compile(r'\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]')
-inc={s:set() for s in stem}; out={s:set() for s in stem}; broken=[]
+"""LLM Wiki lint（機械檢查）：python3 tools/lint.py wiki
+連結格式：[顯示文字](相對路徑.md)。語意檢查（矛盾、相近概念對照）由 agent 判斷。"""
+import re, glob, os, sys
+root = sys.argv[1] if len(sys.argv) > 1 else 'wiki'
+os.chdir(root)
+files = sorted(glob.glob('**/*.md', recursive=True))
+stem = {os.path.splitext(os.path.basename(f))[0]: f for f in files}
+mdlink = re.compile(r'\]\(([^)\s#]+\.md)(?:#[^)]*)?\)')
+read = {f: open(f, encoding='utf-8').read() for f in files}
+
+def targets(f):
+    out = []
+    for m in mdlink.findall(read[f]):
+        out.append(os.path.normpath(os.path.join(os.path.dirname(f), m)))
+    return out
+
+inc = {f: set() for f in files}; out = {f: set() for f in files}; broken = []
 for f in files:
-    s=os.path.splitext(os.path.basename(f))[0]; t=open(f).read()
-    for m in link.findall(t):
-        m=m.strip()
-        if m not in stem: broken.append((f,m))
-        else:
-            out[s].add(m)
-            if s not in('index','log'): inc[m].add(s)
-print('BROKEN',broken)
-skip={'index','log'}
-print('ORPHAN(no incoming except index)',[s for s in stem if s not in skip and not inc[s]])
-print('NO OUTGOING',[s for s in stem if s not in skip and not out[s]])
-print('NO FRONTMATTER',[f for f in files if f!='log.md' and not open(f).read().startswith('---')])
-print('NO 白話版',[f for f in files if f.startswith('concepts/') and '白話版' not in open(f).read()])
-gl=open('glossary.md').read()
-print('NOT IN GLOSSARY',[s for s,f in stem.items() if f.startswith('concepts/') and f'[[{s}]]' not in gl])
-print('SOURCE MISSING SECTIONS',[f for f in files if f.startswith('sources/') and not all(k in open(f).read() for k in ('## 設計決策與消融證據','## 作者提到的限制與未來方向','## 矛盾'))])
-idx=open('index.md').read()
-print('NOT IN INDEX',[s for s,f in stem.items() if s not in skip and f'({f})' not in idx])
-print('BROKEN INDEX LINKS',[m for m in re.findall(r'\]\(([^)]+\.md)\)',idx) if not os.path.exists(m)])
-print('MISSING summary',[f for f in files if f not in ('index.md','log.md') and 'summary:' not in open(f).read().split('---')[1]])
-num=re.compile(r'\d+\.\d|\d{2,}')
-cite=re.compile(r'p\.\s?\d|Table|Fig\.')
-print('--- numeric lines w/o citation')
+    for t in targets(f):
+        if t not in read: broken.append((f, t)); continue
+        out[f].add(t)
+        if f not in ('index.md', 'log.md'): inc[t].add(f)
+skip = {'index.md', 'log.md'}
+print('BROKEN', broken)
+print('LEFTOVER [[wikilinks]]', [f for f in files if '[[' in read[f]])
+print('ORPHAN(no incoming except index)', [f for f in files if f not in skip and not inc[f]])
+print('NO OUTGOING', [f for f in files if f not in skip and not out[f]])
+print('NO FRONTMATTER', [f for f in files if f != 'log.md' and not read[f].startswith('---')])
+print('NO 白話版', [f for f in files if f.startswith('concepts/') and '白話版' not in read[f]])
+gl = set(targets('glossary.md'))
+print('NOT IN GLOSSARY', [f for f in files if f.startswith('concepts/') and f not in gl])
+print('SOURCE MISSING SECTIONS', [f for f in files if f.startswith('sources/') and not all(k in read[f] for k in ('## 設計決策與消融證據', '## 作者提到的限制與未來方向', '## 矛盾'))])
+idx = set(targets('index.md'))
+print('NOT IN INDEX', [f for f in files if f not in skip and f not in idx])
+print('MISSING summary', [f for f in files if f not in skip and 'summary:' not in read[f].split('---')[1]])
+num = re.compile(r'\d+\.\d|\d{2,}'); cite = re.compile(r'p\.\s?\d|Table|Fig\.')
+print('--- numeric lines w/o citation (請人工確認是否需補出處)')
 for f in files:
-    if f in('log.md','index.md','glossary.md'): continue
-    inblk=False
-    for i,l in enumerate(open(f).read().split('\n'),1):
-        if l.startswith('---') and i<15: continue
-        if re.match(r'^(title|venue|raw|updated|sources|tags|aliases|type|slide-role|name|summary|order|generated-by):',l): continue
-        if l.startswith('```'): inblk=not inblk; continue
-        if inblk or l.startswith('|---') or l.startswith('#'): continue
-        l2=re.sub(r'\[\[[^\]]*\]\]','',l)
-        if num.search(l2) and not cite.search(l2):
-            print(f'{f}:{i}: {l[:110]}')
+    if f in ('log.md', 'index.md', 'glossary.md'): continue
+    inblk = False
+    for i, l in enumerate(read[f].split('\n'), 1):
+        if l.startswith('```'): inblk = not inblk; continue
+        if inblk or l.startswith('|---') or l.startswith('#') or (i < 15 and re.match(r'^[a-z-]+:', l)): continue
+        l2 = re.sub(r'\[[^\]]*\]\([^)]*\)', '', l)
+        if num.search(l2) and not cite.search(l2): print(f'{f}:{i}: {l[:110]}')

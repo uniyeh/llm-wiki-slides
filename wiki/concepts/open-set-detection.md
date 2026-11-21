@@ -17,7 +17,7 @@ order: 130
 - 一般 SFOD 假設來源與目標類別相同（封閉集合），偵測不到未定義物體。（SFUOD, p.1）
 - 相關設定：未知物體偵測、開放世界物件偵測（OWOD，加上持續學習）、AOOD（有來源資料的開放集合領域自適應）。（SFUOD, p.3）
 - SFUOD = 無來源資料 + 開放集合：已知類別照常分類，所有未定義類別合併為一個「unknown」類。（SFUOD, p.3）
-- 評估要同時看「已知的準確度」與「未知找回率」→ [[recall-and-h-score]]
+- 評估要同時看「已知的準確度」與「未知找回率」→ [recall-and-h-score](recall-and-h-score.md)
 
 ## 相關
-[[sfuod-2025]] · [[source-free-adaptation]]
+[sfuod-2025](../sources/sfuod-2025.md) · [source-free-adaptation](source-free-adaptation.md)

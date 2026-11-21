@@ -17,4 +17,4 @@ order: 120
 - FLIR 可見光→紅外線、紅外線→COCO：都提升約 2 mAP。（FALCON, Table 4, p.7）
 
 ## 相關
-[[domain-shift]] · [[benchmarks]]
+[domain-shift](domain-shift.md) · [benchmarks](benchmarks.md)
