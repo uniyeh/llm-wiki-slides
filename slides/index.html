@@ -124,9 +124,10 @@ aside.notes{display:none!important}
   <span class="kicker" style="background:var(--purple);margin-top:70px">AI 入門｜6 篇論文整理</span>
   <h1 style="font-size:66px;max-width:780px">換了環境，<br>AI 還認得出來嗎？</h1>
   <p class="lead" style="margin-top:22px">無來源領域自適應物件偵測<br><span class="small">Source-Free Domain Adaptive Object Detection（SF-DAOD）</span></p>
-  <img class="char" src="../asset/char_guide_blue.png" alt="主講角色" style="right:250px;bottom:110px;width:190px">
-  <img class="char sm" src="../asset/char_source_green.png" alt="" style="right:80px;bottom:200px">
-  <img class="char sm" src="../asset/char_struggle_blue.png" alt="" style="right:110px;bottom:40px;width:130px">
+  <div class="deco c" style="width:220px;height:220px;background:var(--blue);right:250px;top:300px;opacity:.9"></div>
+  <div class="deco sq" style="width:170px;height:170px;background:var(--green);right:90px;top:190px;transform:rotate(-12deg);opacity:.9"></div>
+  <div class="deco dia" style="width:110px;height:110px;background:var(--yellow);right:140px;top:460px"></div>
+  <div class="deco tri" style="border-bottom-color:var(--red);right:430px;top:200px"></div>
   <div class="foot"><span class="src">本專案 LLM Wiki（wiki/index.md），整理自 6 篇論文</span><span>← → 或空白鍵翻頁｜N 顯示講者備註</span></div>
   <aside class="notes">開場：今天用 18 頁講一件事——AI 換到沒看過的環境時，在拿不到原本訓練資料的情況下，怎麼自己適應。內容全部來自 wiki，數字都附出處。</aside>
 </section>
@@ -176,7 +177,6 @@ aside.notes{display:none!important}
     </div>
   </div>
   </div>
-  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色" style="bottom:50px;right:60px">
   <div class="foot"><span class="src">wiki/concepts/object-detection.md；DSOD, p.2</span><span></span></div>
   <aside class="notes">框旁的數字是模型的「信心分數」。偵測比分類多了「在哪裡」和「有幾個」。示意圖為自繪，不是論文圖。</aside>
 </section>
@@ -195,7 +195,6 @@ aside.notes{display:none!important}
   <p class="lead" style="font-size:25px">訓練的世界（<b>來源</b>）和使用的世界（<b>目標</b>）不一樣，就叫<b>領域落差</b>。</p>
   <p class="note">分數為 mAP（0–100，越高越好）</p>
   </div>
-  <img class="char" src="../asset/char_struggle_blue.png" alt="卡關角色" style="width:180px">
   <div class="foot"><span class="src">DSOD, Table 1, p.8；wiki/concepts/domain-shift.md、benchmarks.md</span><span></span></div>
   <aside class="notes">Cityscapes → Foggy Cityscapes。29.5 是 Source only，48.7 是 Oracle（用目標標註訓練），出自 DSOD Table 1。mAP 大致可理解成「框得準又認得對」的平均分。</aside>
 </section>
@@ -216,7 +215,6 @@ aside.notes{display:none!important}
     <p style="font-size:23px"><b>🎒 像轉學生：</b>課本和老師都沒了，只剩前一間學校的筆記。</p>
   </div>
   </div>
-  <img class="char" src="../asset/char_sad_red.png" alt="沮喪角色" style="width:180px">
   <div class="foot"><span class="src">DSOD, p.1；CGA, p.1；wiki/concepts/source-free-adaptation.md</span><span></span></div>
   <aside class="notes">這就是「無來源」（Source-Free）：調整時只有在舊環境訓練好的模型，以及新環境沒有標註的資料。</aside>
 </section>
@@ -239,7 +237,6 @@ aside.notes{display:none!important}
     <p style="font-size:23px"><b>⚠️ 風險：</b>猜錯的也被當成正解，越練越歪。</p>
   </div>
   </div>
-  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色">
   <div class="foot"><span class="src">DSOD, p.1, p.3；wiki/concepts/mean-teacher.md、pseudo-label.md</span><span></span></div>
   <aside class="notes">這叫 Mean Teacher；老師給的「參考答案」叫偽標籤（pseudo-label）。老師的權重是學生權重的移動平均（EMA）。目前多數 SFOD 方法都用這個框架（FALCON, p.1）。</aside>
 </section>
@@ -273,7 +270,6 @@ aside.notes{display:none!important}
   </div>
   <p class="small" style="margin-top:22px">＋延伸：圖片分類也在解同一題（CGA）</p>
   </div>
-  <img class="char sm" src="../asset/char_guide_blue.png" alt="主講角色" style="bottom:50px">
   <div class="foot"><span class="src">wiki/concepts/sfod-method-families.md</span><span></span></div>
   <aside class="notes">接下來依序介紹三條路。分類是本 wiki 的整理，不是單一論文的說法。</aside>
 </section>
@@ -293,7 +289,6 @@ aside.notes{display:none!important}
   </div>
   <p class="note">＊依論文表格數值（mAP）</p>
   </div>
-  <img class="char" src="../asset/char_source_green.png" alt="來源模型角色">
   <div class="foot"><span class="src">DSOD, Table 1, p.8、Fig. 6, p.10；wiki/sources/dsod-2026.md</span><span></span></div>
   <aside class="notes"><b>注意</b>：DSOD 表格中 48.1 這列，各類別分數自己平均只有 46.4，論文前後不一致；依使用者決策採表格 mAP 欄，且不拿來和 Oracle 比較。融合權重超過約 0.4 後 AP 急降（Fig. 6）。另有不需 DINOv2 的輕量蒸餾版 46.9。</aside>
 </section>
@@ -313,7 +308,6 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--blue);text-align:center"><div style="font-size:22px">🚌 公車</div><div style="font-size:42px;font-weight:900;color:var(--blue)">+2.9</div></div>
   </div>
   </div>
-  <img class="char" src="../asset/char_determined_red.png" alt="專注角色" style="width:180px">
   <div class="foot"><span class="src">FALCON, Fig. 1, p.2、Table 8, p.8；wiki/sources/falcon-sfod-2026.md</span><span></span></div>
   <aside class="notes">遮罩在訓練前算一次，使用時不需要 OV-SAM，不會變慢。整體晴→霧從 45.0 → 46.9（Table 1, p.6）。汽車、行人幾乎沒變（−0.2、+0.1）。</aside>
 </section>
@@ -331,7 +325,8 @@ aside.notes{display:none!important}
   <p class="small" style="margin:10px 0 0 244px">灰色＝調整前的起點　綠色＝進步幅度（晴→霧，mAP）</p>
   <p class="lead" style="font-size:24px;margin-top:26px">兩篇用的基礎模型不同，<b>起點就不一樣</b>，所以要看各自進步多少。</p>
   </div>
-  <img class="char sm" src="../asset/char_smug_purple.png" alt="小技巧角色">
+  <img class="char" src="../asset/char_smug_purple.png" alt="小技巧角色" style="width:180px">
+  <div class="bubble" style="right:80px;bottom:260px">起點不同，<br>要看進步多少！</div>
   <div class="foot"><span class="src">DSOD, Table 1, p.8；FALCON, Table 1, p.6；wiki/comparisons/results-comparison.md</span><span></span></div>
   <aside class="notes">兩篇 Source only 不同（29.5 vs 25.2），絕對分數不能直接比。DSOD 的 48.1 有表格不一致的疑慮（見第 9 頁備註）。</aside>
 </section>
@@ -351,10 +346,8 @@ aside.notes{display:none!important}
   </div>
   <p class="small" style="margin-top:10px">未知物體找回率：進步了，但約<b>十個只找到一個</b>。</p>
   </div>
-  <img class="char" src="../asset/char_confused_pink.png" alt="疑惑角色">
-  <div class="bubble" style="right:90px;bottom:270px">我不認識你，<br>但你在這裡！</div>
   <div class="foot"><span class="src">SFUOD, p.1、Table 1, p.6；wiki/sources/sfuod-2025.md、open-set-detection.md</span><span></span></div>
-  <aside class="notes">實驗設定：模型只學過汽車、卡車、公車；行人、騎士、機車、火車、腳踏車當作「不認識」。晴→霧：已知類別 26.2 → 32.3；綜合分 8.9 → 16.0。反直覺：基本 Mean Teacher 在這個情境勝過進階方法。</aside>
+  <aside class="notes">實驗設定：模型只學過汽車、卡車、公車；行人、騎士、機車、火車、腳踏車當作「不認識」。晴→霧：已知類別 26.2（既有 SFOD 方法最佳）→ 32.3；綜合分 8.9 → 16.0（Table 1, p.6）。反直覺：基本 Mean Teacher 在這個情境勝過進階方法。</aside>
 </section>
 
 <!-- 13 TTA -->
@@ -370,7 +363,6 @@ aside.notes{display:none!important}
   </div>
   <p class="lead" style="font-size:24px;margin-top:26px">共通點：<b>都沒有原本的課本</b>（來源資料）。</p>
   </div>
-  <img class="char" src="../asset/char_guide_blue.png" alt="主講角色" style="width:180px">
   <div class="foot"><span class="src">TTAOD-F, p.1–3；wiki/concepts/test-time-adaptation.md</span><span></span></div>
   <aside class="notes">TTA 在乎的成本不同：不是訓練多久，而是每張圖處理多快、用多少記憶體。</aside>
 </section>
@@ -391,7 +383,8 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--red)"><p style="font-size:19px">代價：每張圖處理時間</p><div class="stat"><span class="big" style="font-size:44px;color:var(--red)">約 3 倍</span><span class="unit">213 → 694 ms</span></div></div>
   </div>
   </div>
-  <img class="char sm" src="../asset/char_explain_purple.png" alt="解說角色">
+  <img class="char" src="../asset/char_struggle_blue.png" alt="卡關角色" style="width:180px">
+  <div class="bubble" style="right:80px;bottom:260px">變準了，但每張圖<br>慢了約 3 倍！</div>
   <div class="foot"><span class="src">TTAOD-F, Table 1, p.7、Table 9, p.14；wiki/sources/ttaod-f-2025.md</span><span></span></div>
   <aside class="notes">44.8 → 56.2 是 Pascal-C 的 AP50（直接用 → TTAOD-F）。時間為 TTAOD-F 論文自己量的 COCO-C 數字。「便條紙」＝提示調整（prompt tuning）；「筆記本」＝記憶庫（每類最多 20 個例子）。</aside>
 </section>
@@ -418,7 +411,6 @@ aside.notes{display:none!important}
     <div class="card" style="border-color:var(--blue)"><p style="font-size:19px">顯示卡記憶體</p><div style="font-size:34px;font-weight:900">3.8 GB <span style="font-size:20px;color:var(--muted)">vs 11.4</span></div></div>
   </div>
   </div>
-  <img class="char sm" src="../asset/char_smug_purple.png" alt="小技巧角色">
   <div class="foot"><span class="src">VLOD-TTA, Fig. 1, p.2、Table 5, p.11；wiki/sources/vlod-tta-2026.md</span><span></span></div>
   <aside class="notes">比較為 VLOD-TTA 論文量測（COCO-C、Grounding DINO）。它不需要老師模型，每張圖只調一步就重置。仍比直接用慢約 2.5 倍（531.6 vs 210.6 ms）。另一招：每類 16 句描述，挑最符合這張圖的 1/4。</aside>
 </section>
@@ -436,7 +428,6 @@ aside.notes{display:none!important}
   </div>
   <p class="small" style="margin-top:20px">一樣是<b>借用通才模型</b>，題目換成「整張圖是什麼」。</p>
   </div>
-  <img class="char" src="../asset/char_bored_yellow.png" alt="角色" style="width:180px">
   <div class="foot"><span class="src">CGA, p.2、p.5；wiki/sources/cga-2026.md、class-confusion.md</span><span></span></div>
   <aside class="notes">CGA 不是物件偵測，是圖片分類，只作延伸。四個資料集都小幅超越前作，大資料集較明顯（如 DomainNet-126：85.0 → 86.6）。</aside>
 </section>
@@ -455,6 +446,7 @@ aside.notes{display:none!important}
   </ul>
   </div>
   <img class="char" src="../asset/char_dizzy_yellow.png" alt="混亂角色" style="width:180px">
+  <div class="bubble" style="right:80px;bottom:260px">論文的數字<br>也要自己驗算！</div>
   <div class="foot"><span class="src">SFUOD, Table 1, p.6；VLOD-TTA, Table 5, p.11、p.9；DSOD, Table 1, p.8</span><span></span></div>
   <aside class="notes">第 4 點：製作這份簡報時發現 DSOD、FALCON、CGA、VLOD-TTA 都有內文與表格不一致的地方，紀錄在各 wiki 頁的「矛盾」段。</aside>
 </section>
@@ -470,8 +462,6 @@ aside.notes{display:none!important}
   <div class="q" data-quiz><div class="qq">Q2.「無來源」最難在哪裡？<span class="hint">點我</span></div><div class="qa">拿不到原本的訓練資料，只剩舊模型＋沒有答案的新照片。</div></div>
   <div class="q" data-quiz><div class="qq">Q3. 邊用邊學（TTA）和前面的方法差在哪？<span class="hint">點我</span></div><div class="qa">調整的時間點：上線時一張一張即時調整，而不是上線前先調好。</div></div>
   </div>
-  <img class="char sm" src="../asset/char_guide_blue.png" alt="主講角色" style="right:200px">
-  <img class="char sm" src="../asset/char_determined_red.png" alt="" style="right:50px;width:130px">
   <div class="foot"><span class="src">wiki/glossary.md；wiki/concepts/domain-shift.md、source-free-adaptation.md、test-time-adaptation.md</span><span></span></div>
   <aside class="notes">收尾：三條路——請通才幫忙、認出沒見過的、邊用邊學。所有數字與出處都可在 wiki 回查。</aside>
 </section>
